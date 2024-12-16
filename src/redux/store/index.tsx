@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import categoriesReducer from '../slices/categories'; 
+import themeReducer from '../slices/theme'
 
 export const store = configureStore({
   reducer: {
     categories: categoriesReducer, 
+    theme: themeReducer,
   },
 });
 

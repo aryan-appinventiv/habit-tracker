@@ -18,8 +18,13 @@ import {RootStackParamList} from '../../navigators';
 import {items} from '../../constants/list';
 import {aboutItems} from '../../constants/list';
 import styles from './styles';
+import { changeTheme } from '../../redux/slices/theme';
+import { selectTheme } from '../../redux/selector';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Settings = () => {
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(selectTheme);
   const {top: top} = useSafeAreaInsets();
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -28,6 +33,10 @@ const Settings = () => {
       index: 0,
       routes: [{name: 'Tutorial'}],
     });
+  };
+  const handleToggle = () => {
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    dispatch(changeTheme(newTheme)); 
   };
 
   return (
@@ -67,6 +76,8 @@ const Settings = () => {
                       thumbColor={colors.thumbcolor_true}
                       ios_backgroundColor={colors.ios_bg}
                       style={{transform: [{scale: vh(0.8)}]}}
+                      value={currentTheme === 'dark'}  
+                      onValueChange={handleToggle} 
                     />
                   )}
                 </TouchableOpacity>
