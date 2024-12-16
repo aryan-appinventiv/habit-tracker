@@ -10,13 +10,12 @@ const styles = StyleSheet.create({
     },
     headerCont: {
       flexDirection: 'row',
-      gap: vw(25),
+      gap: vw(17),
       alignItems: 'center',
-      marginBottom: vh(20),
     },
     closeImg: {
-      height: vh(18),
-      width: vh(18),
+      height: vh(20),
+      width: vh(20),
     },
     closeCont: {
       height: vh(30),
@@ -30,41 +29,20 @@ const styles = StyleSheet.create({
       letterSpacing: 1,
       color: colors.text,
     },
-    searchIcon: {
-      height: vh(18),
-      width: vh(18),
-    },
-    placeholder: {
-      color: colors.gray,
-      fontSize: vh(15),
-      fontWeight: '500',
-      flex: 1,
-      letterSpacing: 1,
-    },
-    input: {
-      flexDirection: 'row',
-      gap: vw(13),
-      borderWidth: 1,
-      borderColor: colors.lightgray,
-      padding: vh(10),
-      borderRadius: vh(20),
-      backgroundColor: colors.white,
-    },
     itemBtn: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingVertical: vh(20),
+      paddingVertical: vh(10),
       marginTop: vh(13),
       alignItems: 'center',
       paddingHorizontal: vw(15),
       borderRadius: vh(10),
-      backgroundColor: colors.trackcolor_true,
+      backgroundColor: colors.white,
     },
     itemBtnTxt: {
       fontSize: vw(16),
-      fontWeight: '400',
+      fontWeight: '500',
       letterSpacing: 1,
-      color: colors.black,
     },
     itemImg: {
       height: vw(20),
@@ -81,12 +59,13 @@ const styles = StyleSheet.create({
     },
     list: {
       marginTop: vh(10),
+      marginBottom: vh(30),
     },
-    buttonCont: {
-      marginBottom: vh(50),
-      marginTop: vh(20),
+    textCont: {
+      gap: vh(5),
+    },
+    itemBtnDesc: {
+      color: colors.gray,
     },
   });
-
   export default styles;
-  

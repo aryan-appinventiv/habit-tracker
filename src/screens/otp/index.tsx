@@ -3,7 +3,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {vh, vw, Wwidth} from '../../utils/dimensions';
+import {vh} from '../../utils/dimensions';
 import CustomButton from '../../components/customButton';
 import {images} from '../../assets/images';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -19,6 +18,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigators';
 import {OtpInput} from 'react-native-otp-entry';
 import { colors } from '../../utils/colors';
+import styles from './styles';
 
 const OTP = () => {
   const [otp, setOtp] = useState('');
@@ -89,71 +89,3 @@ const OTP = () => {
 
 export default OTP;
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    flex: 1,
-    paddingHorizontal: vw(20),
-  },
-  title: {
-    fontSize: vh(24),
-    letterSpacing: 1.2,
-    fontWeight: '500',
-    color: colors.text,
-  },
-  mainCont: {
-    alignItems: 'center',
-    flex: 1,
-    paddingTop: vh(90),
-  },
-  label: {
-    color: colors.text,
-    fontSize: vh(12),
-    letterSpacing: 0.6,
-    fontWeight: '500',
-  },
-  alreadyCont: {
-    flexDirection: 'row',
-    gap: vw(5),
-    marginVertical: vh(25),
-    justifyContent: 'center',
-  },
-  alreadyTxt: {
-    fontSize: vh(13),
-  },
-  sendAgain: {
-    fontWeight: '500',
-    fontSize: vh(13),
-  },
-  backCont: {
-    marginTop: vh(30),
-    height: vh(30),
-    width: vh(30),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  back: {
-    height: vh(20),
-    width: vh(20),
-  },
-  OTPcontainer:{
-    marginTop: vh(35),
-  },
-  OTPview:{
-    borderRadius: vh(30),
-    width: Wwidth*0.19,
-    height: Wwidth*0.115,
-  },
-  error:{
-    color: colors.red,
-    marginVertical: vh(18),
-  },
-  labelCont:{
-    flexDirection:'row',
-    alignItems:'center',
-    marginTop: vh(10),
-  },
-  mailTxt:{
-    fontWeight: '600',
-  }
-});

@@ -26,4 +26,9 @@ export const images = {
     finance : require('../images/money.png'),
     healthy : require('../images/plant.png'),
     sleep : require('../images/zzz.png'),
+    down: require('../images/down-arrow.png'),
+    plus: require('../images/plus.png'),
+    minus: require('../images/minus.png'),
+    user: require('../images/user.png'),
+    edit: require('../images/pencil.png'),
 }

@@ -31,4 +31,5 @@ export const colors = {
     cat4: '#DAF3EF',
     cat5: '#FBF6DC',
     cat6: '#FCE9F9',
+    pink: '#FCE9F9',
 }

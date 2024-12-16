@@ -106,6 +106,7 @@ import { Image, Text, View } from "react-native";
 import { images } from "../../assets/images";
 import styles from "./styles";
 import { colors } from "../../utils/colors";
+import { vh } from "../../utils/dimensions";
 
 const Tab = createBottomTabNavigator();
 
@@ -126,6 +127,7 @@ const BottomTab = () => {
                 tabBarStyle: {
                     backgroundColor: colors.background,
                     borderTopWidth: 0,
+                    height: vh(90),
                 },
             }}
         >

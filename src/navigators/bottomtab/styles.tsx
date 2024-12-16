@@ -4,7 +4,7 @@ import { vh } from "../../utils/dimensions";
 const styles = StyleSheet.create({
     tabBarText: {  
         fontSize: vh(10), 
-        marginTop: vh(10) 
+        marginTop: vh(10), 
     },
     tabBarCont: { 
         marginTop: vh(10), 

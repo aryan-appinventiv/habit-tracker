@@ -7,7 +7,7 @@ import Tutorial from '../screens/tutorial';
 import BottomTab from './bottomtab';
 import Signup from '../screens/signup';
 import OTP from '../screens/otp';
-import Categories from '../screens/categories';
+//import Categories from '../screens/categories';
 import MoreCategories from '../screens/moreCategories';
 import AddNewHabit from '../screens/addNewHabit';
 import AddNewCategory from '../screens/addNewCategory';
@@ -18,7 +18,7 @@ export type RootStackParamList = {
   BottomTab: undefined;
   Signup: undefined;
   OTP: { email: string };
-  Categories: undefined;
+  //Categories: undefined;
   MoreCategories: {name: string};
   AddNewHabit: undefined;
   AddNewCategory: undefined;
@@ -58,13 +58,13 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen
             name="MoreCategories"
             component={MoreCategories}
-            options={{headerShown: false}}
+            options={{headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
             name="Categories"
             component={Categories}
-            options={{ headerShown: false, presentation: 'fullScreenModal' }}
-      />
+            options={{ headerShown: false }}
+      /> */}
       <Stack.Screen
             name="AddNewHabit"
             component={AddNewHabit}

@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -10,7 +9,7 @@ const Add = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-     Navigation.replace('Categories');
+     Navigation.replace('AddNewCategory');
     }, 0);
 
     return () => clearTimeout(timer);
@@ -21,6 +20,4 @@ const Add = () => {
   )
 }
 
-export default Add
-
-const styles = StyleSheet.create({})
+export default Add;

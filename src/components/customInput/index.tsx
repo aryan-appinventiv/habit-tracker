@@ -1,7 +1,7 @@
-import { StyleSheet, TextInput } from 'react-native';
+import { TextInput } from 'react-native';
 import React from 'react';
 import { colors } from '../../utils/colors';
-import { vh, vw } from '../../utils/dimensions';
+import styles from './styles';
 
 interface CustomInputProps {
   placeholder: string;
@@ -24,17 +24,3 @@ const CustomInput = ({ placeholder, value, onChangeText }: CustomInputProps) => 
 };
 
 export default CustomInput;
-
-const styles = StyleSheet.create({
-  input: {
-    backgroundColor: colors.white,
-    borderColor: colors.lightgray,
-    padding: vh(12),
-    borderWidth: 1,
-    borderRadius: vh(20),
-    fontSize: vh(14),
-    color: colors.text,
-    marginBottom: vh(20),
-    paddingHorizontal: vw(15),
-  },
-});

@@ -116,7 +116,7 @@ export const habitCategories: HabitType[] = [
   },
 ];
 
-export const moreHabitCategories: MoreHabitType[] = [
+export const SportsHabitCategories: MoreHabitType[] = [
   {
     id: 1,
     name: 'Running',
@@ -188,3 +188,103 @@ export const moreHabitCategories: MoreHabitType[] = [
     desc: 'Connect with nature',
   },
 ];
+
+
+
+export const SocialHabitCategories: MoreHabitType[] = [
+  {
+    id: 1,
+    name: 'Meeting friends',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Enhance social life',
+  },
+  {
+    id: 2,
+    name: 'Visiting Relatives',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Building relations',
+  },
+];
+
+export const LearningHabitCategories: MoreHabitType[] = [
+  {
+    id: 1,
+    name: 'Reading',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Enhance social life',
+  },
+  {
+    id: 2,
+    name: 'Research',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Building relations',
+  },
+];
+
+export const FinanceHabitCategories: MoreHabitType[] = [
+  {
+    id: 1,
+    name: 'Investing',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Enhance social life',
+  },
+  {
+    id: 2,
+    name: 'Checking Policies and Funds',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Building relations',
+  },
+];
+
+export const HealthyHabitCategories: MoreHabitType[] = [
+  {
+    id: 1,
+    name: 'Morning walk',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Enhance social life',
+  },
+  {
+    id: 2,
+    name: 'Eating fruits',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Building relations',
+  },
+];
+
+export const SleepHabitCategories: MoreHabitType[] = [
+  {
+    id: 1,
+    name: 'Ensure to take a bath',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Enhance social life',
+  },
+  {
+    id: 2,
+    name: 'Silent phones',
+    img: images.right,
+    icon: images.sports,
+    desc: 'Building relations',
+  },
+];
+
+
+export const day = [
+  {show: 'S', id: '7', dayy: 'SUN' },
+  {show: 'M', id: '1', dayy: 'MON'},
+  {show: 'T', id: '2', dayy: 'TUE'},
+  {show: 'W', id: '3', dayy: 'WED'},
+  {show: 'T', id: '4', dayy: 'THU'},
+  {show: 'F', id: '5', dayy: 'FRI'},
+  {show: 'S', id: '6', dayy: 'SAT'},
+];
+
+

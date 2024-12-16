@@ -5,7 +5,7 @@ interface Habit {
   id: string | number;
   name: string;
   clr?: string;
-  icon?: any; 
+  icon: any; 
   img?: any; 
 }
 
