@@ -75,7 +75,31 @@ const styles = StyleSheet.create({
         lineHeight: vh(30), 
       },
 
-
+      habitListContainer: {
+        marginTop: 20,
+        paddingHorizontal: 15,
+      },
+      
+      habitItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        marginBottom: 5,
+        backgroundColor: '#f8f8f8',
+      },
+      
+      habitText: {
+        fontSize: 16,
+        color: '#333',
+      },
+      
+      noHabitText: {
+        fontSize: 14,
+        color: '#888',
+        textAlign: 'center',
+        marginVertical: 10,
+      },
+      
 
 
   });

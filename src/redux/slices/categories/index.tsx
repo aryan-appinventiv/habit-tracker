@@ -7,6 +7,11 @@ interface Habit {
   clr?: string;
   icon: any; 
   img?: any; 
+  tomorrow?: string;
+  tomorrowDay?: number | string;
+  frequency?: string[],
+  selectedTime?: string;
+  repeat?: number;
 }
 
 interface CategoriesState {
@@ -14,7 +19,7 @@ interface CategoriesState {
 }
 
 const initialState: CategoriesState = {
-  habitTypes: habitCategories,
+  habitTypes: [],
 };
 
 export const categoriesSlice = createSlice({

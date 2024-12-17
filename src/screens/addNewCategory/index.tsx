@@ -10,8 +10,9 @@ import {
   TouchableWithoutFeedback,
   Switch,
   ScrollView,
+  Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addCategory} from '../../redux/slices/categories';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -32,10 +33,9 @@ import ColorPicker, {
 } from 'reanimated-color-picker';
 import CustomButton from '../../components/customButton';
 import styles from './styles';
-import {Calendar} from 'react-native-calendars';
 import moment from 'moment';
 import { day } from '../../constants/list';
-
+import { RootState } from '../../redux/store';
 const AddNewCategory = () => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -47,16 +47,19 @@ const AddNewCategory = () => {
   const [timeError, setTimeError] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [emoji, setEmoji] = useState('📱');
-  const [calendarModal, setCalendarModal] = useState(false);
-  const [selected, setSelected] = useState('');
-  const [days, setDays] = useState(false);
   const [frequency, setFrequency] = useState<string[]>([]);
+  const [repeat, setRepeat] = useState(1);
 
   const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD'); 
   const {top} = useSafeAreaInsets();
   const dispatch = useDispatch();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const tomorrowDate = new Date(tomorrow);
+  const tomorrowDay = tomorrowDate.getDay(); 
+  
+  const habitTypes = useSelector((state: RootState) => state.categories.habitTypes);
+
 
   const handleAddCategory = () => {
     if (!name.trim()) {
@@ -68,6 +71,12 @@ const AddNewCategory = () => {
       setTimeError('Please select a time');
       return;
     }
+    
+    const nameExists = habitTypes.some(habit => habit.name.toLowerCase() === name.trim().toLowerCase());
+    if (nameExists) {
+      Alert.alert('Duplicate Habit', 'A habit with this name already exists.');
+      return;
+    }
 
     const newCategory = {
       id: Date.now().toString(),
@@ -75,6 +84,11 @@ const AddNewCategory = () => {
       clr: hexColor ? hexColor : colors.pink,
       icon: emoji,
       img: images.right,
+      tomorrow,
+      tomorrowDay,
+      frequency,
+      selectedTime,
+      repeat,
     };
 
     dispatch(addCategory(newCategory));
@@ -114,15 +128,7 @@ const AddNewCategory = () => {
   const toggleEmojiModal = () => {
     setIsOpen(!isOpen);
   };
-
-  const toggleCalendarModal = () => {
-    setCalendarModal(!calendarModal);
-  };
   
-  const toggleDays = () =>{
-    setDays(!days);
-  }
-
   const addFrequency = (dayy: string) => {
     setFrequency((prevFrequency) => {
       if (prevFrequency.includes(dayy)) {
@@ -132,6 +138,13 @@ const AddNewCategory = () => {
       }
     });
   };
+
+  const plus=()=>{
+    setRepeat(prevRepeat => prevRepeat + 1);
+  }
+  const minus=()=>{
+    repeat>1 && setRepeat(prevRepeat => prevRepeat - 1);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -200,26 +213,6 @@ const AddNewCategory = () => {
            </View>
         </View>
 
-        <View style={styles.inCont}>
-          <View style={styles.repeatCont}>
-            <Text style={styles.inTxt}>Repeat</Text>
-            <Switch 
-                 onValueChange={toggleDays}
-                 value={days}
-            />
-          </View>
-          <View style={styles.separator}></View>
-          <View style={[styles.repeatCont, {paddingVertical: vh(15)}]}>
-            <Text style={styles.inTxt}>Do it once</Text>
-            <TouchableOpacity
-              style={styles.tomorrow}
-              activeOpacity={0.7}
-              onPress={toggleCalendarModal}>
-              <Text style={styles.inTxt}>{selected || 'Tomorrow'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
         <View style={[styles.repeatCont, styles.inCont, styles.mt]}>
           <Text style={styles.inTxt}>Goal</Text>
           <Switch />
@@ -236,10 +229,16 @@ const AddNewCategory = () => {
           </View>
         </TouchableOpacity>
         {timeError && (<Text style={styles.error}>{timeError}</Text>)}
-        <View style={[styles.repeatCont, styles.inCont, styles.mv]}>
-          <Text style={styles.inTxt}>Remind me</Text>
-          <Switch />
+
+        <View style={[styles.repeatCont, styles.inCont, styles.mt,{paddingVertical: vh(10)}]}>
+          <Text style={styles.inTxt}>Repeat</Text>
+          <View style={{flexDirection:'row', alignItems:'center'}}>
+            <TouchableOpacity style={{backgroundColor:colors.pink, padding: vh(10), borderRadius: vh(10)}} onPress={minus}><Text>-</Text></TouchableOpacity>
+            <Text style={{fontSize: vh(17), padding: vh(10)}}>{repeat}</Text>
+            <TouchableOpacity style={{backgroundColor:colors.pink, padding: vh(10),borderRadius: vh(10)}} onPress={plus}><Text>+</Text></TouchableOpacity>
+          </View>
         </View>
+
         <View style={styles.btn}>
           <CustomButton
             title="Add Category"
@@ -277,30 +276,6 @@ const AddNewCategory = () => {
         onConfirm={handleConfirm}
         onCancel={toggleTimePicker}
       />
-
-      <Modal visible={calendarModal} animationType="fade" transparent>
-        <TouchableWithoutFeedback onPress={toggleCalendarModal}>
-          <View style={styles.modalCont}>
-            <View style={styles.modalInsideCont}>
-              <Calendar
-                onDayPress={(day: any) => {
-                  setSelected(day.dateString);
-                  toggleCalendarModal();
-                }}
-                markedDates={{
-                  [selected]: {
-                    selected: true,
-                    selectedColor: colors.lightgray,
-                    selectedTextColor: '#fff',
-                  },
-                }}
-                minDate={tomorrow}             
-              />
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-
       <EmojiPicker
         onEmojiSelected={handlePick}
         open={isOpen}
