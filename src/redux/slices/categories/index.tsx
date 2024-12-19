@@ -9,9 +9,10 @@ interface Habit {
   img?: any; 
   tomorrow?: string;
   tomorrowDay?: number | string;
-  frequency?: string[],
-  selectedTime?: string;
+  frequency?: number[],
+  selectedTime?: any;
   repeat?: number;
+  repeatCompleted?: number;
 }
 
 interface CategoriesState {

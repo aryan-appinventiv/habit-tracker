@@ -9,7 +9,7 @@ const Add = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-     Navigation.replace('AddNewCategory');
+     Navigation.replace('Categories');
     }, 0);
 
     return () => clearTimeout(timer);

@@ -7,21 +7,25 @@ import Tutorial from '../screens/tutorial';
 import BottomTab from './bottomtab';
 import Signup from '../screens/signup';
 import OTP from '../screens/otp';
-//import Categories from '../screens/categories';
 import MoreCategories from '../screens/moreCategories';
 import AddNewHabit from '../screens/addNewHabit';
 import AddNewCategory from '../screens/addNewCategory';
+import Profile from '../screens/profile';
+import Categories from '../screens/categories';
+import Detail from '../screens/detail';
 
 export type RootStackParamList = {
   Splash: undefined;
   Tutorial: undefined;
   BottomTab: undefined;
   Signup: undefined;
-  OTP: { email: string };
-  //Categories: undefined;
+  OTP: { mobile: string };
   MoreCategories: {name: string};
   AddNewHabit: undefined;
   AddNewCategory: undefined;
+  Profile: undefined;
+  Categories: undefined;
+  Detail: {name: string};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -60,11 +64,6 @@ const RootNavigator: React.FC = () => {
             component={MoreCategories}
             options={{headerShown: false }}
       />
-      {/* <Stack.Screen
-            name="Categories"
-            component={Categories}
-            options={{ headerShown: false }}
-      /> */}
       <Stack.Screen
             name="AddNewHabit"
             component={AddNewHabit}
@@ -73,6 +72,21 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen
             name="AddNewCategory"
             component={AddNewCategory}
+            options={{ headerShown: false }}
+      />
+      <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={{ headerShown: false }}
+      />
+      <Stack.Screen
+            name="Categories"
+            component={Categories}
+            options={{ headerShown: false }}
+      />
+      <Stack.Screen
+            name="Detail"
+            component={Detail}
             options={{ headerShown: false }}
       />
 

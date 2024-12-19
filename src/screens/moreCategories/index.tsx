@@ -56,7 +56,8 @@ import {
         list = SleepHabitCategories;
         break;
       default:
-        list = []; 
+        // list = []; 
+        list = SportsHabitCategories;
     }
   
     return (

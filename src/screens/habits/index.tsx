@@ -18,7 +18,6 @@ import { images } from '../../assets/images';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigators';
-import CustomButton from '../../components/customButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import styles from './styles';
@@ -32,9 +31,6 @@ const Habits = () => {
   const [searchText, setSearchText] = useState('');
   const [filteredHabits, setFilteredHabits] = useState(habitCategories);
 
-  const close = () => {
-    Navigation.replace('BottomTab');
-  };
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -45,12 +41,9 @@ const Habits = () => {
   };
 
   const gotoMore = (name: string) => {
-    Navigation.navigate('MoreCategories', { name });
+    Navigation.navigate('Detail', { name });
   };
 
-  const addNewCategory = () => {
-    Navigation.navigate('AddNewCategory');
-  };
 
   return (
     <KeyboardAvoidingView
@@ -59,10 +52,7 @@ const Habits = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={[styles.container, { paddingTop: top + vh(30) }]}>
           <View style={styles.headerCont}>
-            <TouchableOpacity style={styles.closeCont} onPress={close}>
-              <Image source={images.close} style={styles.closeImg} />
-            </TouchableOpacity>
-            <Text style={styles.heading}>Habits</Text>
+            <Text style={styles.heading}> My Habits</Text>
           </View>
 
           <View style={styles.input}>
@@ -83,8 +73,6 @@ const Habits = () => {
             bounces={false}
             showsVerticalScrollIndicator={false}>
             {filteredHabits.map((item:any) => (
-              // console.log("Icon-->", item.icon),
-              // console.log("Img right--->", item.img),
               <TouchableOpacity
                 style={[styles.itemBtn, { backgroundColor: item.clr }]}
                 activeOpacity={0.7}
@@ -99,15 +87,6 @@ const Habits = () => {
             ))}
           </ScrollView>
 
-          <View style={styles.buttonCont}>
-            <CustomButton
-              title="Create your own"
-              color={colors.text}
-              backColor={colors.tabIcon}
-              onPress={addNewCategory}
-              disabled={false}
-            />
-          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -115,3 +94,4 @@ const Habits = () => {
 };
 
 export default Habits;
+

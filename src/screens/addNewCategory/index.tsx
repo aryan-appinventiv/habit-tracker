@@ -47,7 +47,7 @@ const AddNewCategory = () => {
   const [timeError, setTimeError] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [emoji, setEmoji] = useState('📱');
-  const [frequency, setFrequency] = useState<string[]>([]);
+  const [frequency, setFrequency] = useState<number[]>([]);
   const [repeat, setRepeat] = useState(1);
 
   const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD'); 
@@ -56,8 +56,7 @@ const AddNewCategory = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const tomorrowDate = new Date(tomorrow);
-  const tomorrowDay = tomorrowDate.getDay(); 
-  
+  const tomorrowDay = tomorrowDate.getDay();   
   const habitTypes = useSelector((state: RootState) => state.categories.habitTypes);
 
 
@@ -89,6 +88,7 @@ const AddNewCategory = () => {
       frequency,
       selectedTime,
       repeat,
+      repeatCompleted: 0,
     };
 
     dispatch(addCategory(newCategory));
@@ -129,12 +129,12 @@ const AddNewCategory = () => {
     setIsOpen(!isOpen);
   };
   
-  const addFrequency = (dayy: string) => {
+  const addFrequency = (dayId: number) => {
     setFrequency((prevFrequency) => {
-      if (prevFrequency.includes(dayy)) {
-        return prevFrequency.filter((day) => day !== dayy);
+      if (prevFrequency.includes(dayId)) {
+        return prevFrequency.filter((day) => day !== dayId);
       } else {
-        return [...prevFrequency, dayy];
+        return [...prevFrequency, dayId];
       }
     });
   };
@@ -145,6 +145,8 @@ const AddNewCategory = () => {
   const minus=()=>{
     repeat>1 && setRepeat(prevRepeat => prevRepeat - 1);
   }
+
+  //console.log(frequency);
 
   return (
     <KeyboardAvoidingView
@@ -205,8 +207,8 @@ const AddNewCategory = () => {
               return(
               <TouchableOpacity key={item.id} style={[
                 styles.days,
-                frequency.includes(item.dayy) && styles.selectedDay, 
-              ]} onPress={()=>addFrequency(item.dayy)}>
+                frequency.includes(item.id) && styles.selectedDay, 
+              ]} onPress={()=>addFrequency(item.id)}>
                  <Text style={styles.dayText}>{item.show}</Text>
               </TouchableOpacity>
              )})}
@@ -275,6 +277,7 @@ const AddNewCategory = () => {
         is24Hour={true}
         onConfirm={handleConfirm}
         onCancel={toggleTimePicker}
+        date={new Date()}
       />
       <EmojiPicker
         onEmojiSelected={handlePick}

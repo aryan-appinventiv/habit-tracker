@@ -25,7 +25,7 @@ const OTP = () => {
   const [error, setError] = useState('');
   const {top: top} = useSafeAreaInsets();
   const route = useRoute();
-  const {email}:any = route.params;
+  const {mobile}:any = route.params;
 
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -33,7 +33,7 @@ const OTP = () => {
     if(otp === '1111'){
        Navigation.reset({
         index: 0,
-        routes: [{ name: 'BottomTab' }]
+        routes: [{ name: 'Profile' }]
        })
     }
     else{
@@ -60,7 +60,7 @@ const OTP = () => {
           <Text style={styles.label}>
             Enter the security code we sent to
           </Text>
-          <Text style={styles.mailTxt}> {email}</Text>
+          <Text style={styles.mailTxt}> {mobile}</Text>
           </View>
           <OtpInput
             numberOfDigits={4}
@@ -70,7 +70,7 @@ const OTP = () => {
             theme={{
                 containerStyle: styles.OTPcontainer,
                 pinCodeContainerStyle: styles.OTPview,
-              }}
+              }}  
           />
           {error? <Text style={styles.error}>{error}</Text> : <View style={{height: vh(50)}}></View>}
           <CustomButton title="Continue" onPress={Continue} disabled={otp.trim().length!==4} />

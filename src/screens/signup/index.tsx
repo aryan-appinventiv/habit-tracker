@@ -17,21 +17,21 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigators';
 import { colors } from '../../utils/colors';
-import { emailPattern } from '../../constants/regex';
+import { mobilePattern } from '../../constants/regex';
 import styles from './styles';
 
 const Signup = () => {
-  const [email, setEmail] = useState<string>('');
+  const [mobile, setMobile] = useState('');
   const [error, setError] = useState<string>('');
   const {top: top} = useSafeAreaInsets();
 
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Signup'>>();
   const Continue = () => {
-    if (!emailPattern.test(email)) {
-      setError('Please enter valid email');
+    if (!mobilePattern.test(mobile)) {
+      setError('Please enter valid mobile number');
     } else {
-      Navigation.navigate('OTP',{email});
+      Navigation.navigate('OTP',{mobile});
     }
   };
 
@@ -48,22 +48,25 @@ const Signup = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainCont}>
           <Text style={styles.title}>Sign up</Text>
-          <Text style={styles.label}>Enter your Email</Text>
+          <Text style={styles.label}>Enter your Number</Text>
           <TextInput
-            placeholder="example@email.com"
+            placeholder="Mobile number"
             style={styles.input}
             autoCapitalize="none"
             autoComplete="off"
             placeholderTextColor={colors.gray}
-            value={email}
-            onChangeText={txt => [setEmail(txt), setError('')]}
-            keyboardType='email-address'
+            value={mobile}
+            onChangeText={txt => [setMobile(txt), setError('')]}
+            keyboardType='number-pad'
+            maxLength={10}
+            returnKeyType='done'
+            onSubmitEditing={Continue}
           />
           {error && <Text style={styles.error}>{error}</Text>}
           <CustomButton
             title="Continue"
             onPress={Continue}
-            disabled={email.trim().length < 1}
+            disabled={mobile.trim().length < 1}
           />
           <Text style={styles.or}>or</Text>
           <TouchableOpacity style={styles.logoCont} activeOpacity={0.7}>
@@ -73,6 +76,10 @@ const Signup = () => {
           <TouchableOpacity style={styles.logoCont} activeOpacity={0.7}>
             <Image source={images.appleLogo} style={styles.logo} />
             <Text style={styles.logoTxt}>Continue with Apple</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.logoCont} activeOpacity={0.7}>
+            <Image source={images.mail} style={styles.logo} />
+            <Text style={styles.logoTxt}>Continue with Email</Text>
           </TouchableOpacity>
           <View style={styles.alreadyCont}>
             <Text style={styles.alreadyTxt}>Already have an account?</Text>

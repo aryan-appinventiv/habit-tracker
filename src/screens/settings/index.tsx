@@ -18,9 +18,9 @@ import {RootStackParamList} from '../../navigators';
 import {items} from '../../constants/list';
 import {aboutItems} from '../../constants/list';
 import styles from './styles';
-import { changeTheme } from '../../redux/slices/theme';
-import { selectTheme } from '../../redux/selector';
-import { useDispatch, useSelector } from 'react-redux';
+import {changeTheme} from '../../redux/slices/theme';
+import {selectTheme} from '../../redux/selector';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -36,8 +36,11 @@ const Settings = () => {
   };
   const handleToggle = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    dispatch(changeTheme(newTheme)); 
+    dispatch(changeTheme(newTheme));
   };
+  const gotoProfile = () =>{
+    Navigation.navigate('Profile');
+  }
 
   return (
     <View style={[styles.container, {paddingTop: top + vh(20)}]}>
@@ -45,13 +48,16 @@ const Settings = () => {
         <Text style={styles.label}>Settings</Text>
         <View style={styles.profileCont}>
           <View style={styles.nameCont}>
-        <Image source={images.user} style={styles.profileImg} />
-          <View>
-            <Text style={styles.name}>El Hadji Malick Seck</Text>
-            <Text style={styles.email}>elhadjimalick@gmail.com</Text>
+            <Image source={images.user} style={styles.profileImg} />
+            <View>
+              <Text style={styles.name}>El Hadji Malick Seck</Text>
+              <Text style={styles.email}>elhadjimalick@gmail.com</Text>
+            </View>
           </View>
-          </View>
-          <Image source={images.edit} style={styles.iconImg} />
+          <TouchableOpacity onPress={gotoProfile}>
+            <Image source={images.edit} style={styles.iconImg} />
+          </TouchableOpacity>
+          
         </View>
         <Text style={styles.title1}>General</Text>
         <View style={styles.list}>
@@ -76,8 +82,8 @@ const Settings = () => {
                       thumbColor={colors.thumbcolor_true}
                       ios_backgroundColor={colors.ios_bg}
                       style={{transform: [{scale: vh(0.8)}]}}
-                      value={currentTheme === 'dark'}  
-                      onValueChange={handleToggle} 
+                      value={currentTheme === 'dark'}
+                      onValueChange={handleToggle}
                     />
                   )}
                 </TouchableOpacity>

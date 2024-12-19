@@ -31,4 +31,7 @@ export const images = {
     minus: require('../images/minus.png'),
     user: require('../images/user.png'),
     edit: require('../images/pencil.png'),
+    mail: require('../images/mail.png'),
+    calendar: require('../images/calendar.png'),
+    delete: require('../images/trash.png'),
 }

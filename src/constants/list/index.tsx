@@ -278,13 +278,55 @@ export const SleepHabitCategories: MoreHabitType[] = [
 
 
 export const day = [
-  {show: 'S', id: '7', dayy: 'SUN' },
-  {show: 'M', id: '1', dayy: 'MON'},
-  {show: 'T', id: '2', dayy: 'TUE'},
-  {show: 'W', id: '3', dayy: 'WED'},
-  {show: 'T', id: '4', dayy: 'THU'},
-  {show: 'F', id: '5', dayy: 'FRI'},
-  {show: 'S', id: '6', dayy: 'SAT'},
+  {show: 'S', id: 7, dayy: 'SUN'},
+  {show: 'M', id: 1, dayy: 'MON'},
+  {show: 'T', id: 2, dayy: 'TUE'},
+  {show: 'W', id: 3, dayy: 'WED'},
+  {show: 'T', id: 4, dayy: 'THU'},
+  {show: 'F', id: 5, dayy: 'FRI'},
+  {show: 'S', id: 6, dayy: 'SAT'},
 ];
 
 
+
+export const data = {
+  labels: [
+    '22.07.',
+    '23.07.',
+    '24.07.',
+    '25.07.',
+    '26.07.',
+    '27.07.',
+    '28.07.',
+  ],
+  datasets: [
+    {
+      data: [3000, 3000, 1050, 3000, 0, 0, 0],
+      colors: [
+        (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        (opacity = 0.1) => `rgba(0, 0, 0, ${opacity})`,
+        (opacity = 0.1) => `rgba(0, 0, 0, ${opacity})`,
+        (opacity = 0.1) => `rgba(0, 0, 0, ${opacity})`,
+      ],
+    },
+  ],
+};
+
+
+
+export const commitsData = [
+  { date: "2017-01-02", count: 1 },
+  { date: "2017-01-03", count: 2 },
+  { date: "2017-01-04", count: 3 },
+  { date: "2017-01-05", count: 4 },
+  { date: "2017-01-06", count: 5 },
+  { date: "2017-01-30", count: 2 },
+  { date: "2017-01-31", count: 3 },
+  { date: "2017-03-01", count: 2 },
+  { date: "2017-04-02", count: 4 },
+  { date: "2017-03-05", count: 2 },
+  { date: "2017-02-30", count: 4 }
+];

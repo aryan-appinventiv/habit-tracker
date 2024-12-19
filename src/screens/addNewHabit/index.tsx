@@ -10,5 +10,3 @@ const AddNewHabit = () => {
 }
 
 export default AddNewHabit
-
-const styles = StyleSheet.create({})
