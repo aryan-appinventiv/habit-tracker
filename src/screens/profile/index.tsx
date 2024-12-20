@@ -65,7 +65,7 @@ const Profile = () => {
             <CustomInput placeholder={`What's your name?`} value={username} onChangeText={txt => setUsername(txt)} />
             <CustomInput placeholder='Setup email' value={email} onChangeText={txt => setEmail(txt)} keyType={'email-address'} />
             <CustomInput placeholder='Phone number' value={mobile} onChangeText={txt => setMobile(txt)} keyType={'number-pad'} max={10}/>
-            <CustomInput placeholder='Select your gender' value={gender} onChangeText={txt => setGender(txt)} />
+            {/* <CustomInput placeholder='Select your gender' value={gender} onChangeText={txt => setGender(txt)} /> */}
             <TouchableOpacity
               style={styles.input}
               activeOpacity={0.7}

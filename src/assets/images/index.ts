@@ -34,4 +34,5 @@ export const images = {
     mail: require('../images/mail.png'),
     calendar: require('../images/calendar.png'),
     delete: require('../images/trash.png'),
+    verify: require('../images/verify.png'),
 }

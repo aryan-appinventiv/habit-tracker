@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "658733336628",
+    "project_id": "habit-103ab",
+    "storage_bucket": "habit-103ab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658733336628:android:5c2b8d02b1be648c792261",
+        "android_client_info": {
+          "package_name": "com.habit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658733336628-86plq72kgbh06r0om82oc22ms5tmfqu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ3GEhAmrNks6n8zvN4IQ44cMYTrJRdlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658733336628-86plq72kgbh06r0om82oc22ms5tmfqu4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "658733336628-41qi2cn9ijr7ml5mqlkk8ujikgeui6g8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.habit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
