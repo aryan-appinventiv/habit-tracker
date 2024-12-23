@@ -8,7 +8,7 @@ interface CustomInputProps {
   value: string;
   onChangeText: (text: string) => void;
   keyType?: any;
-  max?: number|string;
+  max?: number;
 }
 
 const CustomInput = ({ placeholder, value, onChangeText, keyType, max }: CustomInputProps) => {
@@ -22,7 +22,7 @@ const CustomInput = ({ placeholder, value, onChangeText, keyType, max }: CustomI
       value={value}
       onChangeText={onChangeText} 
       keyboardType={keyType}
-      maxLength={10}
+      maxLength={max || 25}
     />
   );
 };

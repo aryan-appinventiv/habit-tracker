@@ -13,6 +13,9 @@ import AddNewCategory from '../screens/addNewCategory';
 import Profile from '../screens/profile';
 import Categories from '../screens/categories';
 import Detail from '../screens/detail';
+import RegisterWithEmail from '../screens/registerWithEmail';
+import Signin from '../screens/signin';
+import ForgotPassword from '../screens/forgotPassword';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -26,6 +29,9 @@ export type RootStackParamList = {
   Profile: undefined;
   Categories: undefined;
   Detail: {name: string};
+  RegisterWithEmail: undefined;
+  Signin: undefined;
+  ForgotPassword: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -87,6 +93,21 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen
             name="Detail"
             component={Detail}
+            options={{ headerShown: false }}
+      />
+      <Stack.Screen
+            name="RegisterWithEmail"
+            component={RegisterWithEmail}
+            options={{ headerShown: false }}
+      />
+      <Stack.Screen
+            name="Signin"
+            component={Signin}
+            options={{ headerShown: false }}
+      />
+      <Stack.Screen
+            name="ForgotPassword"
+            component={ForgotPassword}
             options={{ headerShown: false }}
       />
 

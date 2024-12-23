@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "654611666873",
+    "project_id": "habit-tracker-app-28cc8",
+    "storage_bucket": "habit-tracker-app-28cc8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654611666873:android:f572c6dac7421f8b094868",
+        "android_client_info": {
+          "package_name": "com.habit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "654611666873-5n81qll3tkdres0g2aoad61pm96nidm4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.habit",
+            "certificate_hash": "24108e91712f656d1eaf0c34edb1ea9175cd2532"
+          }
+        },
+        {
+          "client_id": "654611666873-3483vkscn8kj5s4og9ql37n8kc5uf49j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3_qp9bSctyqhO8spJzjHjBZzgzV5rs6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "654611666873-3483vkscn8kj5s4og9ql37n8kc5uf49j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "654611666873-c24jq8s93u8dd3lutvu65helbdu9io0g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.habit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

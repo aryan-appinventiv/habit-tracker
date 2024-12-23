@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     },
     OTPview:{
       borderRadius: vh(30),
-      width: Wwidth*0.19,
-      height: Wwidth*0.115,
+      width: Wwidth*0.14,
+      height: Wwidth*0.1,
     },
     error:{
       color: colors.red,

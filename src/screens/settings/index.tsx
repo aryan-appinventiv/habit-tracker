@@ -21,6 +21,7 @@ import styles from './styles';
 import {changeTheme} from '../../redux/slices/theme';
 import {selectTheme} from '../../redux/selector';
 import {useDispatch, useSelector} from 'react-redux';
+import auth from '@react-native-firebase/auth';
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,17 @@ const Settings = () => {
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const logout = () => {
-    Navigation.reset({
-      index: 0,
-      routes: [{name: 'Tutorial'}],
+    auth()
+    .signOut()
+    .then(response => {
+      console.log("User signed out")
+      Navigation.reset({
+        index: 0,
+        routes: [{name: 'Signup'}],
+      });
+    })
+    .catch(error => {
+      console.log(error);
     });
   };
   const handleToggle = () => {
