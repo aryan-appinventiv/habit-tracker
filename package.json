@@ -38,7 +38,8 @@
     "react-native-svg": "^15.10.1",
     "react-redux": "^9.2.0",
     "reanimated-color-picker": "^3.0.6",
-    "rn-emoji-keyboard": "^1.7.0"
+    "rn-emoji-keyboard": "^1.7.0",
+    "watchman": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

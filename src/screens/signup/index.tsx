@@ -137,13 +137,17 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   async function gotoGoogle() {
-    onGoogleButtonPress().then(data => {
+    try {
+      const data = await onGoogleButtonPress();
       if (!data) {
         console.log('Error: No data');
         return;
       }
       console.log('success -> ', data);
-    });
+      Navigation.replace("Profile")
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
  

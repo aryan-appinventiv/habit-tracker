@@ -45,7 +45,6 @@ export const onGoogleButtonPress = async()=> {
     console.log("Hello", result);
     // Get the users ID token
     const signInResult = await GoogleSignin.signIn();
-    console.log(signInResult,"signInResult")
     if (signInResult) {
      console.log("result", signInResult);
   } else {
@@ -62,6 +61,7 @@ export const onGoogleButtonPress = async()=> {
   
     // Sign-in the user with the credential
     await auth().signInWithCredential(googleCredential);
+    return signInResult;
   }  catch(err){
     console.log(err,"err")
   }
