@@ -34,4 +34,7 @@ export const images = {
     mail: require('../images/mail.png'),
     calendar: require('../images/calendar.png'),
     delete: require('../images/trash.png'),
+    eye: require('../images/view.png'),
+    eyeclose: require('../images/eye.png'),
+    password: require('../images/padlock.png'),
 }

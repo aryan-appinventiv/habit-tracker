@@ -1,11 +1,24 @@
 import React, {useState} from 'react';
-import {View, TextInput, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  Image,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Platform,
+  Keyboard,
+} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
-import { images } from '../../assets/images';
+import {images} from '../../assets/images';
 import styles from './styles';
 import {RootStackParamList} from '../../navigators';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CustomTextInput from '../../components/customTextInput';
+import CustomButton from '../../components/customButton';
 
 type NavigationProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -14,60 +27,61 @@ type NavigationProps = NativeStackNavigationProp<
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, seterror] = useState('');
+  const [error, setError] = useState('');
+
+  const {top} = useSafeAreaInsets();
 
   const Navigation = useNavigation<NavigationProps>();
 
   const handlePasswordReset = async () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
-      seterror('login_email_error1');
+      setError('login_email_error1');
     } else if (!emailPattern.test(email)) {
-      seterror('login_email_error2');
+      setError('login_email_error2');
     }
 
     setLoading(true);
     try {
       await auth().sendPasswordResetEmail(email);
-      console.log('resend email sent')
+      console.log('resend email sent');
       setEmail('');
       //Navigation.replace('Signin');
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.secondCont}>
-        <Text style={styles.title}>reset_password</Text>
-        <Text style={styles.desc}>reset_pass_link_send</Text>
-        <View style={styles.inputBox}>
-          <Image source={images.mail} style={styles.icon} />
-          <TextInput
+    <KeyboardAvoidingView
+      style={[styles.Container, {paddingTop: top}]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.mainCont}>
+        <Text style={styles.heading}>Reset Password</Text>
+        <CustomTextInput
             value={email}
             onChangeText={text => {
-              setEmail(text), seterror('');
+              setEmail(text);
+              setError('');
             }}
-            placeholder={'email_address'}
+            placeholder="xyz@email.com"
+            error={error}
+            icon={images.mail}
             autoCapitalize="none"
-            style={styles.textInput}
-            autoFocus={true}
+            secureTextEntry={false}
+            showToggle={false}
+            label= "Enter your email"
           />
-        </View>
-        {error && <Text style={styles.error}>{error}</Text>}
-        <TouchableOpacity
-          onPress={handlePasswordReset}
-          style={styles.register}
-          disabled={loading}>
-          <Text style={styles.registerTitle}>
-            {loading ? 'sending' : 'send_password_reset_email'}
-          </Text>
-        </TouchableOpacity>
+            <View style={styles.btn}>
+              <CustomButton onPress={handlePasswordReset} title={loading? 'Sending':'Reset'} disabled={email.trim().length<=0} />
+            </View>
       </View>
-    </View>
+    
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
