@@ -1,42 +1,43 @@
-import {StyleSheet, Text, View, Modal, Image, Pressable} from 'react-native';
+import { Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import React from 'react';
-import { vh, vw } from '../../utils/dimensions';
+import CustomButton from '../customButton';
+import Separator from '../seperator';
+import { vh } from '../../utils/dimensions';
 
+interface CustomModalProps {
+  visibleModal: boolean;
+  presseable1: () => void;
+  presseable2: () => void;
+  presseable3: () => void;
+  toggleModal: () => void;
+  title1: string;
+  title2: string;
+  title3: string;
+}
 
-const CustomModal = props => {
-  const {
-    modalVisible,
-    onRequestClose,
-    buttonText = 'Okay',
-    headText,
-    TextContent,
-    Img,
-    handleModal,
-    Imgbg,
-    customModalViewStyle,
-  } = props;
+const CustomModal: React.FC<CustomModalProps> = ({
+  visibleModal,
+  presseable1,
+  presseable2,
+  presseable3,
+  toggleModal,
+  title1,
+  title2,
+  title3,
+}) => {
   return (
-    <Modal
-      
-      animationType="fade"
-      visible={modalVisible}
-      onRequestClose={onRequestClose}
-      {...props}>
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContainer}>
-          
-          <View style={Imgbg? styles.modalViews:styles.modalView}>
-            <Image source={Img} style={styles.img}/>
+    <Modal visible={visibleModal} animationType="slide" transparent>
+      <TouchableWithoutFeedback onPress={toggleModal}>
+        <View style={styles.modalCont}>
+          <View style={styles.modalInsideCont}>
+            <CustomButton title={title1} onPress={presseable1} disabled={false}/>
+            <Separator />
+            <CustomButton title={title2} onPress={presseable2} disabled={false} />
+            <Separator />
+            <CustomButton title={title3} onPress={presseable3} disabled={false} />
           </View>
-          <Text style={styles.modalheading}>{headText}</Text>
-          <View>
-            <Text style={styles.modalText1}>{TextContent}</Text>
-          </View>
-          {Imgbg?<Pressable style={styles.modalButton} onPress={handleModal}>
-            <Text style={styles.modalButtonText}>{buttonText}</Text>
-          </Pressable>:null}
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -44,74 +45,14 @@ const CustomModal = props => {
 export default CustomModal;
 
 const styles = StyleSheet.create({
-  modalView: {
-    height: vh(50),
-    width: vh(50),
-    borderRadius: vh(30),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'#E8E8E8',
-    opacity: 0.5,
-  },
-  modalViews: {
-    height: vh(50),
-    width: vh(50),
-    borderRadius: vh(30),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F79E98',
-    opacity: 0.5,
-  },
-  modalBackground: {
+  modalCont: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContainer: {
-    marginHorizontal:vh(20),
-    padding: vh(20),
-    backgroundColor: 'white',
-    borderRadius: vh(10),
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  modalheading: {
-    fontSize: vh(20),
-    marginBottom: vh(5),
-    marginTop: vh(15),
-    fontWeight: '700',
-    lineHeight: vh(26),
+  modalInsideCont: {
+    paddingBottom: vh(30),
+    width: '100%',
   },
-
-  modalText1: {
-    marginHorizontal: vw(35),
-    fontSize: vh(13),
-    textAlign: 'center',
-    fontWeight: '300',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    color: '#4D5876',
-    lineHeight: vh(19.5),
-    marginBottom: vh(20),
-  },
-  modalButton: {
-    paddingVertical: vh(10),
-    paddingHorizontal: vw(20),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2A7BBB',
-    borderRadius: vh(5),
-  },
-  modalButtonText: {
-    color: 'white',
-    fontSize: vh(15),
-    fontWeight: '600',
-  },
-  bg:{
-    backgroundColor: '#F79E98',
-  },
-  img: {
-    height:vh(25),
-    width:vh(25)
-},
 });

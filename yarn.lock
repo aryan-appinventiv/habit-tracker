@@ -6638,6 +6638,11 @@ react-native-gesture-handler@*, react-native-gesture-handler@^2.21.2, react-nati
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-crop-picker@^0.41.6:
+  version "0.41.6"
+  resolved "https://registry.npmjs.org/react-native-image-crop-picker/-/react-native-image-crop-picker-0.41.6.tgz"
+  integrity sha512-oyEVkiJX1cnjYJolQluOqXxz9xhLHrv+pyCs7+jA87yaa110/0jv1UCqxjVjxueKug7zk/UnjG7i9Ks1cGyLpA==
+
 react-native-modal-datetime-picker@^18.0.0:
   version "18.0.0"
   resolved "https://registry.npmjs.org/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-18.0.0.tgz"
@@ -6732,7 +6737,7 @@ react-native-vector-icons@*:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, "react-native@>= 0.30.0", "react-native@>= 0.50.0", react-native@>=0.57, react-native@>=0.59.0, react-native@>=0.65.0, react-native@0.76.5:
+react-native@*, "react-native@>= 0.30.0", "react-native@>= 0.50.0", react-native@>=0.40.0, react-native@>=0.57, react-native@>=0.59.0, react-native@>=0.65.0, react-native@0.76.5:
   version "0.76.5"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.76.5.tgz"
   integrity sha512-op2p2kB+lqMF1D7AdX4+wvaR0OPFbvWYs+VBE7bwsb99Cn9xISrLRLAgFflZedQsa5HvnOGrULhtnmItbIKVVw==

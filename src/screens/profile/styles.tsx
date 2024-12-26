@@ -33,10 +33,9 @@ const styles = StyleSheet.create({
       paddingRight: vh(30),
     },
     profileImg: {
-      height: vh(80),
-      width: vh(80),
+      height: vh(100),
+      width: vh(100),
       borderRadius: vh(50),
-      padding: vh(10),
       backgroundColor: colors.pink,
       marginVertical: vh(30),
     },
@@ -79,10 +78,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     modalInsideCont: {
-      backgroundColor: colors.white,
+      //backgroundColor: colors.white,
       paddingBottom: vh(30),
       width: '100%',
-      height: Wheight/2.5,
     },
   });
   export default styles;

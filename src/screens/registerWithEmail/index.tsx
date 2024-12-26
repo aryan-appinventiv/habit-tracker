@@ -22,13 +22,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigators';
 
 const RegisterWithEmail = () => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
@@ -41,13 +39,6 @@ const RegisterWithEmail = () => {
 
   const validateInputs = () => {
     let isValid = true;
-
-    if (!name.trim()) {
-      setNameError('Username cannot be empty');
-      isValid = false;
-    } else {
-      setNameError('');
-    }
 
     const emailValidationError = validateEmail(email);
     if (emailValidationError) {
@@ -80,40 +71,28 @@ const RegisterWithEmail = () => {
 
   const onRegister = () => {
     if (!validateInputs()) return;
-
+  
     setIsLoading(true);
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         const user = auth().currentUser;
         user
-          ?.updateProfile({
-            displayName: name,
-          })
+          ?.sendEmailVerification()
           .then(() => {
-            user
-              ?.sendEmailVerification()
-              .then(() => {
-                Alert.alert(
-                  'Verification email sent. Please check your inbox to verify your email before logging in.'
-                );
-              })
-              .catch(error => {
-                console.error('Error sending verification email:', error);
-              });
-
-            setName('');
-            setEmail('');
-            setPassword('');
-            setConfirmPassword('');
-
-            Navigation.navigate('Signin');
+            Alert.alert(
+              'Verification email sent. Please check your inbox to verify your email before logging in.'
+            );
           })
           .catch(error => {
-            console.error('Error updating profile:', error);
-            Alert.alert('Error updating user profile');
-          })
-          .finally(() => setIsLoading(false));
+            console.error('Error sending verification email:', error);
+          });
+  
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+  
+        Navigation.navigate('Signin');
       })
       .catch(error => {
         setIsLoading(false);
@@ -124,8 +103,10 @@ const RegisterWithEmail = () => {
         } else {
           Alert.alert('Error during registration');
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
+  
 
   return (
     <KeyboardAvoidingView
@@ -134,21 +115,6 @@ const RegisterWithEmail = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainCont}>
           <Text style={styles.heading}>Create an Account</Text>
-
-          <CustomTextInput
-            value={name}
-            onChangeText={text => {
-              setName(text);
-              setNameError('');
-            }}
-            placeholder="Username"
-            error={nameError}
-            icon={images.user}
-            autoCapitalize="none"
-            secureTextEntry={false}
-            showToggle={false}
-            label="Enter your name"
-          />
 
           <CustomTextInput
             value={email}
