@@ -9,6 +9,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { images } from '../../assets/images';
@@ -55,7 +56,10 @@ const Signin = () => {
 
         if (user.emailVerified) {
           setIsLoading(false);
-          Navigation.navigate('Profile');
+          Navigation.reset({
+            index: 0,
+            routes:[{name: 'Profile'}]
+          })
         } else {
           setIsLoading(false);
           Alert.alert('Email not verified', 'Verify email', [
@@ -85,7 +89,7 @@ const Signin = () => {
       style={[styles.Container, { paddingTop: top }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.mainCont}>
+        <ScrollView style={styles.mainCont} bounces={false} showsVerticalScrollIndicator={false}>
           <Text style={styles.heading}>Login</Text>
           <CustomTextInput
             value={email}
@@ -125,7 +129,7 @@ const Signin = () => {
           <TouchableOpacity style={styles.forgotCont} onPress={gotoForgot}>
             <Text style={styles.forgotText}>Forgot password</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

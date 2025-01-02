@@ -107,7 +107,6 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import auth from '@react-native-firebase/auth';
 import CustomButton from '../../components/customButton';
 import {images} from '../../assets/images';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -124,7 +123,7 @@ const OTP = () => {
   const route = useRoute();
   const {mobile, confirmation}: any = route.params;
   const Navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList,'Profile'>>();
   const [loading, setLoading] = useState(false);
 
   const verifyOtp = async () => {
@@ -139,8 +138,8 @@ const OTP = () => {
       setLoading(false);
       Navigation.reset({
         index: 0,
-        routes: [{name: 'Profile'}],
-      });
+        routes: [{name: 'Profile', params: {mobile}}]
+      })
     } catch (err) {
       setLoading(false);
       setError('Invalid OTP. Please try again.');

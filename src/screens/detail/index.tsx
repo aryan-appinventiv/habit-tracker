@@ -10,14 +10,17 @@ import {BarChart, ContributionGraph} from 'react-native-chart-kit';
 import {commitsData, data} from '../../constants/list';
 import styles from './styles';
 import { colors } from '../../utils/colors';
+import { useDispatch } from 'react-redux';
+import { removeCategory } from '../../redux/slices/categories';
 
 const Detail = () => {
   const [btn, setBtn] = useState('Week');
   const route = useRoute();
-  const {name}: any = route.params;
+  const { name, id }: any = route.params;
   const {top} = useSafeAreaInsets();
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch();  
   const chartConfig = {
     backgroundGradientFrom: '#fff',
     backgroundGradientTo: '#fff',
@@ -25,9 +28,18 @@ const Detail = () => {
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   };
+  console.log("id-->", id)
 
   const goback = () => {
     Navigation.goBack();
+  };
+
+  const handleDelete = () => {
+    if (id) {
+      console.log("Deleting habit with ID:", id);  // Log the ID being deleted
+      dispatch(removeCategory(id));
+      Navigation.goBack();
+    }
   };
 
   return (
@@ -40,7 +52,7 @@ const Detail = () => {
             onPress={goback}>
             <Image source={images.close} style={styles.headerIcon} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerIconCont} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.headerIconCont} activeOpacity={0.7} onPress={handleDelete}>
             <Image source={images.delete} style={styles.headerDelIcon} />
           </TouchableOpacity>
         </View>

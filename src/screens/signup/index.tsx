@@ -57,9 +57,6 @@ const Signup = () => {
     }
   };
 
-  const skip = () => {
-    Navigation.replace('BottomTab');
-  };
   const handleEmail = () =>{
     Navigation.navigate('RegisterWithEmail');
   }
@@ -71,9 +68,6 @@ const Signup = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={[styles.container, {paddingTop: top}]}>
-      <TouchableOpacity style={styles.skip} activeOpacity={0.7} onPress={skip}>
-        <Text style={styles.skipTxt}>Skip for now</Text>
-      </TouchableOpacity>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.mainCont}>
           <Text style={styles.title}>Sign up</Text>
@@ -104,10 +98,6 @@ const Signup = () => {
             onPress={gotoGoogle}>
             <Image source={images.googleLogo} style={styles.logo} />
             <Text style={styles.logoTxt}>Continue with Google</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.logoCont} activeOpacity={0.7}>
-            <Image source={images.appleLogo} style={styles.logo} />
-            <Text style={styles.logoTxt}>Continue with Apple</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.logoCont} activeOpacity={0.7} onPress={handleEmail}>
             <Image source={images.mail} style={styles.logo} />

@@ -1,4 +1,4 @@
-import {Platform, StyleSheet} from 'react-native';
+import { StyleSheet} from 'react-native';
 import {colors} from '../../utils/colors';
 import {vh, vw, Wheight} from '../../utils/dimensions';
 
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   mainCont: {
     flex: 1,
-    paddingVertical: Wheight * 0.2,
+    paddingVertical: Wheight * 0.1,
+    marginBottom: vh(10),
   },
   btn:{
     marginTop: vh(30)

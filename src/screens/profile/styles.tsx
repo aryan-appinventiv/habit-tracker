@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingRight: vh(30),
     },
+    headerContBack: {
+      flex: 1,
+      alignItems: 'center',
+      paddingRight: -vh(30),
+    },
     profileImg: {
       height: vh(100),
       width: vh(100),
@@ -81,6 +86,18 @@ const styles = StyleSheet.create({
       //backgroundColor: colors.white,
       paddingBottom: vh(30),
       width: '100%',
+      height: Wheight/2.5,
+    },
+    loadingContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 999, 
     },
   });
   export default styles;

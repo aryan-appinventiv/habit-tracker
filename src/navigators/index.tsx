@@ -10,12 +10,11 @@ import OTP from '../screens/otp';
 import MoreCategories from '../screens/moreCategories';
 import AddNewHabit from '../screens/addNewHabit';
 import AddNewCategory from '../screens/addNewCategory';
-import Profile from '../screens/profile';
-import Categories from '../screens/categories';
 import Detail from '../screens/detail';
 import RegisterWithEmail from '../screens/registerWithEmail';
 import Signin from '../screens/signin';
 import ForgotPassword from '../screens/forgotPassword';
+import Profile from '../screens/profile';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -27,7 +26,6 @@ export type RootStackParamList = {
   AddNewHabit: undefined;
   AddNewCategory: undefined;
   Profile: undefined;
-  Categories: undefined;
   Detail: {name: string};
   RegisterWithEmail: undefined;
   Signin: undefined;
@@ -83,11 +81,6 @@ const RootNavigator: React.FC = () => {
       <Stack.Screen
             name="Profile"
             component={Profile}
-            options={{ headerShown: false }}
-      />
-      <Stack.Screen
-            name="Categories"
-            component={Categories}
             options={{ headerShown: false }}
       />
       <Stack.Screen

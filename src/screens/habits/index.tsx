@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { colors } from '../../utils/colors';
 import { vh } from '../../utils/dimensions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,11 +26,15 @@ const Habits = () => {
   const { top } = useSafeAreaInsets();
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'MoreCategories'>>();
+
   const habitCategories = useSelector((state: RootState) => state.categories.habitTypes);
 
   const [searchText, setSearchText] = useState('');
   const [filteredHabits, setFilteredHabits] = useState(habitCategories);
 
+  useEffect(() => {
+    setFilteredHabits(habitCategories);
+  }, [habitCategories]);
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -40,10 +44,9 @@ const Habits = () => {
     setFilteredHabits(filtered);
   };
 
-  const gotoMore = (name: string) => {
-    Navigation.navigate('Detail', { name });
+  const gotoMore = (name: string, id: string | number) => {
+    Navigation.navigate('Detail', { name, id });
   };
-
 
   return (
     <KeyboardAvoidingView
@@ -72,21 +75,24 @@ const Habits = () => {
             style={styles.list}
             bounces={false}
             showsVerticalScrollIndicator={false}>
-            {filteredHabits.map((item:any) => (
+            {filteredHabits.map((item: any) => (
               <TouchableOpacity
                 style={[styles.itemBtn, { backgroundColor: item.clr }]}
                 activeOpacity={0.7}
-                onPress={() => gotoMore(item.name)}
+                onPress={() => gotoMore(item.name, item.id)}
                 key={item.id}>
                 <View style={styles.iconCont}>
-                  {typeof item.icon === 'string'? (<Text>{item.icon}</Text>):(<Image source={item.icon} style={styles.iconImg} />)}
+                  {typeof item.icon === 'string' ? (
+                    <Text>{item.icon}</Text>
+                  ) : (
+                    <Image source={item.icon} style={styles.iconImg} />
+                  )}
                   <Text style={styles.itemBtnTxt}>{item.name}</Text>
                 </View>
                 <Image source={item.img} style={styles.itemImg} />
               </TouchableOpacity>
             ))}
           </ScrollView>
-
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -94,4 +100,3 @@ const Habits = () => {
 };
 
 export default Habits;
-

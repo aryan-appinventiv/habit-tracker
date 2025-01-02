@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
       height: vh(50),
       width: vh(50),
       backgroundColor:colors.pink,
-      padding:vh(5),
       borderRadius: vh(25)
     },
     profileCont:{

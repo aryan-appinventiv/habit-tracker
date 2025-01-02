@@ -67,6 +67,7 @@ const BottomTab = () => {
                         </View>
                     ),
                     tabBarLabel: () => null,
+                    tabBarStyle: { display: "none" },
                 }}
             />
             <Tab.Screen
