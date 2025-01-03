@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     itemBtn: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      paddingVertical: vh(20),
+      paddingVertical: vh(10),
       marginTop: vh(13),
       alignItems: 'center',
       paddingHorizontal: vw(15),

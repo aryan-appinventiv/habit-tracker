@@ -6,8 +6,9 @@ interface Habit {
   clr?: string;
   icon: any;
   img?: any;
-  tomorrow?: string;
-  tomorrowDay?: number | string;
+  today?: string;
+  todayDay?: number | string;
+  todayDate?: any;
   frequency?: number[];
   selectedTime?: any;
   repeat?: number;

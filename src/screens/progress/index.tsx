@@ -80,7 +80,6 @@ const Progress = () => {
               )}
               <Text style={styles.itemBtnTxt}>{item.name}</Text>
             </View>
-            <Image source={item.img} style={styles.itemImg} />
           </TouchableOpacity>
         ))}
       </ScrollView>

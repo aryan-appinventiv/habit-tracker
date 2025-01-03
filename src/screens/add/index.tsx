@@ -111,8 +111,6 @@ const Add = () => {
               bounces={false}
               showsVerticalScrollIndicator={false}>
               {filteredHabits.map((item:any) => (
-                // console.log("Icon-->", item.icon),
-                // console.log("Img right--->", item.img),
                 <TouchableOpacity
                   style={[styles.itemBtn, { backgroundColor: item.clr }]}
                   activeOpacity={0.7}

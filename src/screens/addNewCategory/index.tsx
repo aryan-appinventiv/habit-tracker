@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -24,6 +24,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomInput from '../../components/customInput';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import EmojiPicker, { EmojiType } from 'rn-emoji-keyboard';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import ColorPicker, {
   Panel1,
   Swatches,
@@ -52,13 +54,13 @@ const AddNewCategory = () => {
   const [repeat, setRepeat] = useState(1);
   const [frequencyError, setFrequencyError] = useState('');
 
-  const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+  const today = moment().format('YYYY-MM-DD');
   const { top } = useSafeAreaInsets();
   const dispatch = useDispatch();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const tomorrowDate = new Date(tomorrow);
-  const tomorrowDay = tomorrowDate.getDay();
+  const todayDate = new Date(today);
+  const todayDay = todayDate.getDay();
   const habitTypes = useSelector((state: RootState) => state.categories.habitTypes);
 
   const handleAddCategory = () => {
@@ -89,8 +91,9 @@ const AddNewCategory = () => {
       clr: hexColor ? hexColor : colors.pink,
       icon: emoji,
       img: images.right,
-      tomorrow,
-      tomorrowDay,
+      today,
+      todayDay,
+      todayDate,
       frequency,
       selectedTime,
       repeat,
@@ -103,7 +106,69 @@ const AddNewCategory = () => {
       routes: [{ name: 'BottomTab', params: { screen: 'Habits' } }],
     });
   };
+  // const handleAddCategory = async () => {
+  //   if (!name.trim()) {
+  //     setNameError('Category name is required');
+  //     return;
+  //   }
 
+  //   if (!selectedTime.trim()) {
+  //     setTimeError('Please select a time');
+  //     return;
+  //   }
+
+  //   if (frequency.length === 0) {
+  //     setFrequencyError('Please select at least one day.');
+  //     return;
+  //   }
+
+  //   const nameExists = habitTypes.some(habit => habit.name.toLowerCase() === name.trim().toLowerCase());
+  //   if (nameExists) {
+  //     Alert.alert('Duplicate Habit', 'A habit with this name already exists.');
+  //     return;
+  //   }
+
+  //   const newCategory = {
+  //     id: Date.now().toString(),
+  //     name,
+  //     clr: hexColor ? hexColor : colors.pink,
+  //     icon: emoji,
+  //     img: images.right,
+  //     today,
+  //     todayDay,
+  //     todayDate,
+  //     frequency,
+  //     selectedTime,
+  //     repeat,
+  //     repeatCompleted: 0,
+  //   };
+
+  //   // Save the category to Firestore
+  //   try {
+  //     const user = auth().currentUser;
+  //     if (user) {
+  //       await firestore()
+  //         .collection('users')
+  //         .doc(user.uid)
+  //         .collection('categories') // Collection where categories are stored
+  //         .doc(newCategory.id)  // Use the new category's ID as the document ID
+  //         .set(newCategory); // Set the category data in Firestore
+  //       console.log('Category saved to Firestore');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error saving category to Firestore:', error);
+  //     Alert.alert('Error', 'There was an issue saving the category. Please try again.');
+  //   }
+
+  //   // Save the category in Redux state
+  //   dispatch(addCategory(newCategory));
+
+  //   // Reset navigation to the "Habits" screen
+  //   navigation.reset({
+  //     index: 0,
+  //     routes: [{ name: 'BottomTab', params: { screen: 'Habits' } }],
+  //   });
+  // };
   const close = () => {
     navigation.goBack();
   };
