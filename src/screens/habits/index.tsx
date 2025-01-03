@@ -26,7 +26,7 @@ const Habits = () => {
   const { top } = useSafeAreaInsets();
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'MoreCategories'>>();
-
+  
   const habitCategories = useSelector((state: RootState) => state.categories.habitTypes);
 
   const [searchText, setSearchText] = useState('');
@@ -44,8 +44,8 @@ const Habits = () => {
     setFilteredHabits(filtered);
   };
 
-  const gotoMore = (name: string, id: string | number) => {
-    Navigation.navigate('Detail', { name, id });
+  const gotoMore = (item:any) => {
+    Navigation.navigate('Detail', {item});
   };
 
   return (
@@ -79,7 +79,7 @@ const Habits = () => {
               <TouchableOpacity
                 style={[styles.itemBtn, { backgroundColor: item.clr }]}
                 activeOpacity={0.7}
-                onPress={() => gotoMore(item.name, item.id)}
+                onPress={() => gotoMore(item)}
                 key={item.id}>
                 <View style={styles.iconCont}>
                   {typeof item.icon === 'string' ? (

@@ -57,7 +57,44 @@ const styles = StyleSheet.create({
     calendar:{
       justifyContent:'center',
       paddingVertical: vh(20),
-    }
+    },
+
+    itemBtn: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: vh(20),
+      marginTop: vh(13),
+      alignItems: 'center',
+      paddingHorizontal: vw(15),
+      borderRadius: vh(10),
+      backgroundColor: colors.trackcolor_true,
+    },
+    itemBtnTxt: {
+      fontSize: vw(16),
+      fontWeight: '400',
+      letterSpacing: 1,
+      color: colors.black,
+    },
+    itemImg: {
+      height: vw(20),
+      width: vw(20),
+    },
+    iconCont: {
+      flexDirection: 'row',
+      gap: vw(15),
+      alignItems: 'center',
+    },
+    iconImg: {
+      width: vh(18),
+      height: vh(18),
+    },
+    list: {
+      marginTop: vh(10),
+      marginBottom: vh(20),
+    },
+    buttonCont: {
+      marginBottom: vh(20),
+    },
   });
   export default styles;
   

@@ -7,7 +7,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigators';
 import {images} from '../../assets/images';
 import {BarChart, ContributionGraph} from 'react-native-chart-kit';
-import {commitsData, data} from '../../constants/list';
 import styles from './styles';
 import { colors } from '../../utils/colors';
 import { useDispatch } from 'react-redux';
@@ -16,7 +15,7 @@ import { removeCategory } from '../../redux/slices/categories';
 const Detail = () => {
   const [btn, setBtn] = useState('Week');
   const route = useRoute();
-  const { name, id }: any = route.params;
+  const { item }: any = route.params;
   const {top} = useSafeAreaInsets();
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -28,20 +27,72 @@ const Detail = () => {
     color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   };
-  console.log("id-->", id)
 
   const goback = () => {
     Navigation.goBack();
   };
 
   const handleDelete = () => {
-    if (id) {
-      console.log("Deleting habit with ID:", id);  // Log the ID being deleted
-      dispatch(removeCategory(id));
+    if (item.id) {
+      console.log("Deleting habit with ID:", item.id); 
+      dispatch(removeCategory(item.id));
       Navigation.goBack();
     }
   };
 
+  const weekDays = [
+    'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'
+  ];
+   const copy = [...item.frequency];
+   const sortedFrequency = copy.sort((a: number, b: number) => a - b);
+   const frequencyText = sortedFrequency.map((day: number) => weekDays[day - 1]).join(', ');
+
+
+
+  const data = {
+    labels: [
+      '22.07.',
+      '23.07.',
+      '24.07.',
+      '25.07.',
+      '26.07.',
+      '27.07.',
+      '28.07.',
+    ],
+    datasets: [
+      {
+        data: [3000, 3000, 1050, 3000, 0, 0, 0],
+        colors: [
+          (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          (opacity = 0.1) => `rgba(0, 0, 0, ${opacity})`,
+          (opacity = 0.1) => `rgba(0, 0, 0, ${opacity})`,
+          (opacity = 0.1) => `rgba(0, 0, 0, ${opacity})`,
+        ],
+      },
+    ],
+  };
+  
+  
+  
+  const commitsData = [
+    { date: "2017-01-02", count: 1 },
+    { date: "2017-01-03", count: 2 },
+    { date: "2017-01-04", count: 3 },
+    { date: "2017-01-05", count: 4 },
+    { date: "2017-01-06", count: 5 },
+    { date: "2017-01-30", count: 2 },
+    { date: "2017-01-31", count: 3 },
+    { date: "2017-03-01", count: 2 },
+    { date: "2017-04-02", count: 4 },
+    { date: "2017-03-05", count: 2 },
+    { date: "2017-02-30", count: 4 }
+  ];
+
+  console.log(Object.keys(item))
+  console.log(item.tomorrow, item.tomorrowDay)
   return (
     <View style={[styles.container, {paddingTop: top + vh(20)}]}>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
@@ -57,21 +108,21 @@ const Detail = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.imgCont}>
-          <Text>🕍</Text>
+        <View style={[styles.imgCont,{backgroundColor:item.clr}]}>
+          <Text>{item.icon}</Text>
         </View>
-        <Text style={styles.habitName}>{name || 'Drink water'}</Text>
+        <Text style={styles.habitName}>{item.name || 'Habit Name'}</Text>
         <View style={styles.txtCont}>
-          <Text style={styles.txt}>Every day</Text>
+          <Text style={styles.txt}>{item.frequency.length==7?'All days': frequencyText}</Text>
           <View style={styles.bottomLine}></View>
-          <Text style={styles.txt}>5 glasses per day</Text>
+          <Text style={styles.txt}>{item.repeat} times per day</Text>
           <View style={styles.bottomLine}></View>
-          <Text style={styles.txt}>Any time of the day</Text>
+          <Text style={styles.txt}>{item.selectedTime} hours</Text>
           <View style={styles.bottomLine}></View>
         </View>
 
         <Text style={styles.txt}>Yearly status</Text>
-        <View style={styles.chartCont}>
+        <ScrollView style={styles.chartCont} horizontal>
           <ContributionGraph
             values={commitsData}
             endDate={new Date('2017-04-01')}
@@ -79,8 +130,9 @@ const Detail = () => {
             width={Wwidth}
             height={Wheight / 4}
             chartConfig={chartConfig}
+            horizontal
           />
-        </View>
+        </ScrollView>
 
         <Text style={styles.txt}>Charts</Text>
         <View style={styles.btnCont}>

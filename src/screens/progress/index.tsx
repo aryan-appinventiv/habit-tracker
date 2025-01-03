@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View} from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {colors} from '../../utils/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -6,11 +6,15 @@ import {vh} from '../../utils/dimensions';
 import {Calendar} from 'react-native-calendars';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import styles from './styles';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const Progress = () => {
   const [selected, setSelected] = useState('');
   const [btn, setBtn] = useState('Summary');
   const {top: top} = useSafeAreaInsets();
+
+  const habitCategories = useSelector((state: RootState) => state.categories.habitTypes);
   return (
     <View style={[styles.container, {paddingTop: top + vh(30)}]}>
       <Text style={styles.heading}>Progress</Text>
@@ -23,8 +27,7 @@ const Progress = () => {
         </TouchableOpacity>
       </View>
 
-
-    <View style={styles.mainCont}>
+    {btn=='Summary' && (<View style={styles.mainCont}>
       <Text style={styles.label}>Current productivity</Text>
       <View style={styles.progressBar}>
       <CircularProgress 
@@ -57,7 +60,32 @@ const Progress = () => {
           }}
         />
       </View>
-      </View>  
+      </View>)}
+
+      {btn=='Habits' && (
+        <ScrollView
+        style={styles.list}
+        bounces={false}
+        showsVerticalScrollIndicator={false}>
+        {habitCategories.map((item: any) => (
+          <TouchableOpacity
+            style={[styles.itemBtn, { backgroundColor: item.clr }]}
+            activeOpacity={0.7}
+            key={item.id}>
+            <View style={styles.iconCont}>
+              {typeof item.icon === 'string' ? (
+                <Text>{item.icon}</Text>
+              ) : (
+                <Image source={item.icon} style={styles.iconImg} />
+              )}
+              <Text style={styles.itemBtnTxt}>{item.name}</Text>
+            </View>
+            <Image source={item.img} style={styles.itemImg} />
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      )}
+      
     </View>
   );
 };
