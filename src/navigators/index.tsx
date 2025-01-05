@@ -15,7 +15,7 @@ import RegisterWithEmail from '../screens/registerWithEmail';
 import Signin from '../screens/signin';
 import ForgotPassword from '../screens/forgotPassword';
 import Profile from '../screens/profile';
-import useFetchCategories from '../hooks';
+import useFetchCategories from '../utils/firestore/useFetchCategories'
 
 export type RootStackParamList = {
   Splash: undefined;

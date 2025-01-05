@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
-import { setCategories } from '../redux/slices/categories';
+import { setCategories } from '../../../redux/slices/categories';
 import auth from '@react-native-firebase/auth';
 
 const useFetchCategories = () => {
