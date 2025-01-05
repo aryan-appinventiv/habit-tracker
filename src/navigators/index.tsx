@@ -15,6 +15,7 @@ import RegisterWithEmail from '../screens/registerWithEmail';
 import Signin from '../screens/signin';
 import ForgotPassword from '../screens/forgotPassword';
 import Profile from '../screens/profile';
+import useFetchCategories from '../hooks';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -35,6 +36,7 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator: React.FC = () => {
+      useFetchCategories();
   return (
     <NavigationContainer>
       <Stack.Navigator>

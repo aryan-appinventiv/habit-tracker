@@ -63,28 +63,28 @@ const AddNewCategory = () => {
   const todayDay = todayDate.getDay();
   const habitTypes = useSelector((state: RootState) => state.categories.habitTypes);
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
     if (!name.trim()) {
       setNameError('Category name is required');
       return;
     }
-
+  
     if (!selectedTime.trim()) {
       setTimeError('Please select a time');
       return;
     }
-
+  
     if (frequency.length === 0) {
       setFrequencyError('Please select at least one day.');
       return;
     }
-
+  
     const nameExists = habitTypes.some(habit => habit.name.toLowerCase() === name.trim().toLowerCase());
     if (nameExists) {
       Alert.alert('Duplicate Habit', 'A habit with this name already exists.');
       return;
     }
-
+  
     const newCategory = {
       id: Date.now().toString(),
       name,
@@ -93,82 +93,34 @@ const AddNewCategory = () => {
       img: images.right,
       today,
       todayDay,
-      todayDate,
       frequency,
       selectedTime,
       repeat,
-      repeatCompleted: 0,
+      repeatCompleted: {},
     };
-
-    dispatch(addCategory(newCategory));
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'BottomTab', params: { screen: 'Habits' } }],
-    });
+  
+    try {
+      const user = auth().currentUser;
+      if (user) {
+        await firestore()
+          .collection('users')
+          .doc(user.uid)
+          .collection('habitCategories')
+          .doc(newCategory.id)
+          .set(newCategory);
+      }
+  
+      dispatch(addCategory(newCategory));
+  
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'BottomTab', params: { screen: 'Habits' } }],
+      });
+    } catch (error) {
+      console.error('Error saving category to Firestore:', error);
+      Alert.alert('Error', 'There was an issue saving the habit. Please try again.');
+    }
   };
-  // const handleAddCategory = async () => {
-  //   if (!name.trim()) {
-  //     setNameError('Category name is required');
-  //     return;
-  //   }
-
-  //   if (!selectedTime.trim()) {
-  //     setTimeError('Please select a time');
-  //     return;
-  //   }
-
-  //   if (frequency.length === 0) {
-  //     setFrequencyError('Please select at least one day.');
-  //     return;
-  //   }
-
-  //   const nameExists = habitTypes.some(habit => habit.name.toLowerCase() === name.trim().toLowerCase());
-  //   if (nameExists) {
-  //     Alert.alert('Duplicate Habit', 'A habit with this name already exists.');
-  //     return;
-  //   }
-
-  //   const newCategory = {
-  //     id: Date.now().toString(),
-  //     name,
-  //     clr: hexColor ? hexColor : colors.pink,
-  //     icon: emoji,
-  //     img: images.right,
-  //     today,
-  //     todayDay,
-  //     todayDate,
-  //     frequency,
-  //     selectedTime,
-  //     repeat,
-  //     repeatCompleted: 0,
-  //   };
-
-  //   // Save the category to Firestore
-  //   try {
-  //     const user = auth().currentUser;
-  //     if (user) {
-  //       await firestore()
-  //         .collection('users')
-  //         .doc(user.uid)
-  //         .collection('categories') // Collection where categories are stored
-  //         .doc(newCategory.id)  // Use the new category's ID as the document ID
-  //         .set(newCategory); // Set the category data in Firestore
-  //       console.log('Category saved to Firestore');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error saving category to Firestore:', error);
-  //     Alert.alert('Error', 'There was an issue saving the category. Please try again.');
-  //   }
-
-  //   // Save the category in Redux state
-  //   dispatch(addCategory(newCategory));
-
-  //   // Reset navigation to the "Habits" screen
-  //   navigation.reset({
-  //     index: 0,
-  //     routes: [{ name: 'BottomTab', params: { screen: 'Habits' } }],
-  //   });
-  // };
   const close = () => {
     navigation.goBack();
   };

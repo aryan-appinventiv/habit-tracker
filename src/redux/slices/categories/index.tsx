@@ -8,7 +8,6 @@ interface Habit {
   img?: any;
   today?: string;
   todayDay?: number | string;
-  todayDate?: any;
   frequency?: number[];
   selectedTime?: any;
   repeat?: number;
@@ -34,6 +33,9 @@ export const categoriesSlice = createSlice({
         repeatCompleted: {},
       };
       state.habitTypes.push(newHabit);
+    },
+    setCategories: (state, action: PayloadAction<Habit[]>) => {
+      state.habitTypes = action.payload;
     },
     removeCategory: (state, action: PayloadAction<string | number>) => {
       state.habitTypes = state.habitTypes.filter(
@@ -100,5 +102,6 @@ export const {
   removeCategory,
   incrementRepeatCompleted,
   decrementRepeatCompleted,
+  setCategories,
 } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
