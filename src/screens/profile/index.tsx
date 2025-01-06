@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity, TouchableWithoutFeedback, View, ScrollView, Keyboard, Modal, ActivityIndicator } from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { vh } from '../../utils/dimensions';
 import { colors } from '../../utils/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,14 +10,13 @@ import { RootStackParamList } from '../../navigators';
 import { images } from '../../assets/images';
 import CustomInput from '../../components/customInput';
 import CustomButton from '../../components/customButton';
-import { Calendar } from 'react-native-calendars';
-import styles from './styles';
 import ImagePicker from 'react-native-image-crop-picker';
 import CustomModal from '../../components/customModal';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { useRoute } from '@react-navigation/native';
+import styles from './styles';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -26,7 +26,7 @@ const Profile = () => {
   const [dob, setDob] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false); 
-  const [calendarModal, setCalendarModal] = useState(false);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [imageModal, setImageModal] = useState(false);
   const [genderModal, setGenderModal] = useState(false);
   const [showBack, setShowBack] = useState(false);
@@ -38,12 +38,6 @@ const Profile = () => {
   const { mobile: mobileFromOtp } = route.params as { mobile?: string } || {};
 
   useEffect(() => {
-    if(Navigation.canGoBack()){
-      setShowBack(true);
-    }
-    if (mobileFromOtp) {
-      setMobile(mobileFromOtp); 
-    }
     const fetchUserProfile = async () => {
       setLoading(true);
       const user = auth().currentUser;
@@ -58,6 +52,9 @@ const Profile = () => {
             setGender(userData?.gender || '');
             setDob(userData?.dob || '');
             setProfileImage(userData?.profilePicture || user.photoURL || '');
+            setShowBack(true); 
+          } else {
+            setShowBack(false); 
           }
         } catch (error) {
           console.error('Error fetching user data: ', error);
@@ -83,8 +80,7 @@ const Profile = () => {
 
         if (profileImage) {
           const imageUri = profileImage;
-          // const fileName = `profile_images/${user.uid}/${Date.now()}.jpg`;
-          const fileName = `profile_images/${user.uid}.jpg`;
+          const fileName = `profile_images/${user.uid}/${Date.now()}.jpg`;
           const reference = storage().ref(fileName);
           try {
             await reference.putFile(imageUri);
@@ -116,7 +112,6 @@ const Profile = () => {
     }
   };
 
-  const toggleCalendarModal = () => setCalendarModal(!calendarModal);
   const toggleImageModal = () => setImageModal(!imageModal);
   const toggleGenderModal = () => setGenderModal(!genderModal);
 
@@ -168,6 +163,14 @@ const Profile = () => {
     toggleGenderModal();
   };
 
+  const showDatePicker = () => setDatePickerVisible(true);
+  const hideDatePicker = () => setDatePickerVisible(false);
+
+  const handleConfirmDate = (date: Date) => {
+    setDob(date.toISOString().split('T')[0]);
+    hideDatePicker();
+  };
+
   return (
     <KeyboardAvoidingView style={[styles.container, { paddingTop: top + vh(30) }]} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -199,7 +202,7 @@ const Profile = () => {
                 <Text style={styles.inputTxt}>{gender || `Select your gender`}</Text>
                 <Image source={images.down} style={styles.backIcon} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.input} activeOpacity={0.7} onPress={toggleCalendarModal}>
+              <TouchableOpacity style={styles.input} activeOpacity={0.7} onPress={showDatePicker}>
                 <Text style={styles.inputTxt}>{dob || `What is your date of birth?`}</Text>
                 <Image source={images.calendar} style={styles.backIcon} />
               </TouchableOpacity>
@@ -217,28 +220,12 @@ const Profile = () => {
         </View>
       )}
 
-      <Modal visible={calendarModal} animationType="fade" transparent>
-        <TouchableWithoutFeedback onPress={toggleCalendarModal}>
-          <View style={styles.modalCont}>
-            <View style={styles.modalInsideCont}>
-              <Calendar
-                onDayPress={(day: any) => {
-                  setDob(day.dateString);
-                  toggleCalendarModal();
-                }}
-                markedDates={{
-                  [dob]: {
-                    selected: true,
-                    selectedColor: colors.lightgray,
-                    selectedTextColor: colors.white,
-                  },
-                }}
-                hideExtraDays={true}
-              />
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+      <DateTimePickerModal
+        isVisible={datePickerVisible}
+        mode="date"
+        onConfirm={handleConfirmDate}
+        onCancel={hideDatePicker}
+      />
 
       <CustomModal
         visibleModal={imageModal}

@@ -12,7 +12,7 @@ export const colors = {
     purple: 'purple',
     searchbar : '#e4e4e4',
     orange: '#FFA07A',
-    redTitle : '#FF0800',
+    redTitle : '#AA0000',
     transparent: 'transparent',
     trackcolor_false : '#767577',
     trackcolor_true : '#81b0ff',

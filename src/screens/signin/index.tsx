@@ -22,6 +22,8 @@ import { RootStackParamList } from '../../navigators';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomTextInput from '../../components/customTextInput';
 import { validateEmail, validatePassword } from '../../utils/validation';
+import firestore from '@react-native-firebase/firestore';
+import { onLogin } from '../../utils/firestore/onLogin';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -43,41 +45,8 @@ const Signin = () => {
     setPasswordError(passwordValidationError);
 
     if (!emailValidationError && !passwordValidationError) {
-      onLogin();
+      onLogin(email, password, setIsLoading, Navigation);
     }
-  };
-
-  const onLogin = () => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        setIsLoading(true);
-        const user = response.user;
-
-        if (user.emailVerified) {
-          setIsLoading(false);
-          Navigation.reset({
-            index: 0,
-            routes:[{name: 'Profile'}]
-          })
-        } else {
-          setIsLoading(false);
-          Alert.alert('Email not verified', 'Verify email', [
-            {
-              text: 'Resend email',
-              onPress: () => user.sendEmailVerification(),
-            },
-            { text: 'Ok' },
-          ]);
-
-          auth().signOut();
-        }
-      })
-      .catch(error => {
-        setIsLoading(false);
-        console.log(error);
-        Alert.alert('email and password do not matched');
-      });
   };
 
   const gotoForgot = () => {

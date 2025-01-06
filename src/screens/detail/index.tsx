@@ -444,14 +444,15 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useDispatch } from 'react-redux';
 import { ContributionGraph } from 'react-native-chart-kit';
 import styles from './styles';
-import { colors } from '../../utils/colors';
-import { removeCategory } from '../../redux/slices/categories';
 import { images } from '../../assets/images';
 import { vh, Wheight, Wwidth } from '../../utils/dimensions';
 import { RootStackParamList } from '../../navigators';
+import { deleteHabitCategory } from '../../utils/firestore/deleteHabitCategory';
+import ConfirmationModal from '../../components/confirmationModal';
 
 const Detail = () => {
   const [btn, setBtn] = useState('Week');
+  const [visibleModal, setVisibleModal] = useState(false);
   const route = useRoute();
   const { item }: any = route.params;
   const { top } = useSafeAreaInsets();
@@ -472,13 +473,21 @@ const Detail = () => {
   };
 
   const handleDelete = () => {
-    if (item.id) {
-      console.log('Deleting habit with ID:', item.id);
-      dispatch(removeCategory(item.id));
-      Navigation.goBack();
-    }
+    deleteHabitCategory(item.id, dispatch, Navigation);
   };
+  
+  const onClose = () =>{
+    toggleModal();
+  }
 
+  const onConfirm = ()=>{
+    handleDelete();
+    toggleModal();
+  }
+
+  const toggleModal=()=>{
+     setVisibleModal(!visibleModal);
+  }
   // const generateYearData = () => {
   //   const startDate = new Date(item.todayDate);
   //   const frequency = item.frequency; // [1 (Monday) to 7 (Sunday)]
@@ -511,20 +520,16 @@ const Detail = () => {
       const currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
   
-      // Get the day of the week (1 for Monday, 7 for Sunday)
       const dayOfWeek = currentDate.getDay() || 7; // Adjust for Sunday being 0
   
-      // Check if the current day is in the frequency array
       if (frequency.includes(dayOfWeek)) {
-        const currentDateString = currentDate.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
-        const count = repeatCompleted[currentDateString] || 0; // Default to 0 if no data
-  
-        // Map count to 1-5 scale
+        const currentDateString = currentDate.toISOString().split('T')[0]; 
+        const count = repeatCompleted[currentDateString] || 0; 
         const intensity = count >= item.repeat
-          ? 5 // Darkest shade
+          ? 5 
           : count > 0
-          ? Math.ceil((count / item.repeat) * 4) // Intermediate shades
-          : 1; // Lightest shade
+          ? Math.ceil((count / item.repeat) * 4) 
+          : 1; 
   
         data.push({
           date: currentDateString,
@@ -561,10 +566,11 @@ const Detail = () => {
           <TouchableOpacity
             style={styles.headerIconCont}
             activeOpacity={0.7}
-            onPress={handleDelete}
+            onPress={toggleModal}
           >
             <Image source={images.delete} style={styles.headerDelIcon} />
           </TouchableOpacity>
+          <ConfirmationModal visible={visibleModal} onClose={onClose} onConfirm={onConfirm} title="Delete" desc="Are you sure you want to delete this habit?"/>
         </View>
 
         <View style={[styles.imgCont, { backgroundColor: item.clr }]}>
@@ -593,7 +599,7 @@ const Detail = () => {
             values={commitsData}
             endDate={new Date('2025-12-31')}
             numDays={365}
-            width={Wwidth * 3} // Adjust width to accommodate 365 blocks
+            width={Wwidth * 3} 
             height={Wheight / 3.5}
             chartConfig={chartConfig}
           />
