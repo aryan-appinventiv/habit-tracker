@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity, TouchableWithoutFeedback, View, ScrollView, Keyboard, Modal, ActivityIndicator } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity, TouchableWithoutFeedback, View, ScrollView, Keyboard, ActivityIndicator } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { vh } from '../../utils/dimensions';
 import { colors } from '../../utils/colors';
@@ -17,6 +17,7 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { useRoute } from '@react-navigation/native';
 import styles from './styles';
+import CustomToast from '../../components/customToast';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -68,7 +69,7 @@ const Profile = () => {
   }, []); 
 
   const goback = () => {
-    Navigation.goBack();
+    Navigation.replace('BottomTab',{screen: 'Settings'});
   };
 
   const update = async () => {
@@ -86,7 +87,8 @@ const Profile = () => {
             await reference.putFile(imageUri);
             profileImageUrl = await reference.getDownloadURL();
           } catch (error) {
-            console.error("Error uploading image:", error);
+            console.log("Error uploading image:", error);
+            CustomToast('error','Error', 'Error uploading image');
           }
         }
 
@@ -101,12 +103,11 @@ const Profile = () => {
           },
           { merge: true } 
         );
-
-        Alert.alert('Profile updated successfully');
+        CustomToast('success','Success', 'Profile updated successfully 👋');
         Navigation.replace('BottomTab', { screen: 'Settings' });
       }
     } catch (error) {
-      Alert.alert('Error', 'There was an issue updating your profile. Please try again.');
+      CustomToast('error','Error', 'There was an issue updating your profile. Please try again.');
     } finally {
       setLoading(false);
     }

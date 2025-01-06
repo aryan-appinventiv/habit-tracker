@@ -1,8 +1,9 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { Alert } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../../navigators';
+import CustomToast from '../../../components/customToast';
+import { Alert } from 'react-native';
 
 export const onLogin = async (
   email: string,
@@ -40,7 +41,7 @@ export const onLogin = async (
       await auth().signOut();
     }
   } catch (error) {
-    Alert.alert('Error', 'email and password do not match');
+    CustomToast('error','Error','email and password do not match');
   } finally {
     setIsLoading(false);
   }

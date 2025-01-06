@@ -91,8 +91,8 @@ const Settings = () => {
   const onClose = ()=>{
     toggleModal();
   }
-
-  return (
+  
+  return ( 
     <View style={[styles.container, {paddingTop: top + vh(20)}]}>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Text style={styles.label}>Settings</Text>
@@ -151,7 +151,7 @@ const Settings = () => {
           {aboutItems.map((item, id) => {
             return (
               <View key={id}>
-                <TouchableOpacity style={styles.itemBtn} activeOpacity={0.7}>
+                <TouchableOpacity style={styles.itemBtn} activeOpacity={0.7} >
                   <View style={styles.iconCont}>
                     <Image source={item.icon} style={styles.iconImg} />
                     <Text style={[styles.itemBtnTxt, {color: colors.black}]}>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Alert,
   Text,
   TouchableOpacity,
   View,
@@ -11,7 +10,6 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
 import { images } from '../../assets/images';
 import { colors } from '../../utils/colors';
 import { useNavigation } from '@react-navigation/native';
@@ -22,7 +20,6 @@ import { RootStackParamList } from '../../navigators';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import CustomTextInput from '../../components/customTextInput';
 import { validateEmail, validatePassword } from '../../utils/validation';
-import firestore from '@react-native-firebase/firestore';
 import { onLogin } from '../../utils/firestore/onLogin';
 
 const Signin = () => {

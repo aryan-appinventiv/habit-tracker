@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import {
   View,
-  TextInput,
   Text,
-  Image,
-  TouchableOpacity,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Platform,
@@ -19,6 +16,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CustomTextInput from '../../components/customTextInput';
 import CustomButton from '../../components/customButton';
+import CustomToast from '../../components/customToast';
+import { validateEmail } from '../../utils/validation';
 
 type NavigationProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -34,21 +33,16 @@ const ForgotPassword = () => {
   const Navigation = useNavigation<NavigationProps>();
 
   const handlePasswordReset = async () => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.trim()) {
-      setError('login_email_error1');
-    } else if (!emailPattern.test(email)) {
-      setError('login_email_error2');
-    }
-
+    setError(validateEmail(email));
     setLoading(true);
     try {
       await auth().sendPasswordResetEmail(email);
-      console.log('resend email sent');
+      CustomToast('info', 'resend email sent');
       setEmail('');
-      //Navigation.replace('Signin');
+      Navigation.goBack();
     } catch (error: any) {
       console.log(error);
+      CustomToast('error', 'failed to resent email');
     } finally {
       setLoading(false);
     }

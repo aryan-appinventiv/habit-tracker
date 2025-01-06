@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Alert,
   View,
   KeyboardAvoidingView,
   Platform,
@@ -16,10 +15,11 @@ import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../components/customButton';
 import CustomTextInput from '../../components/customTextInput';
 import styles from './styles';
-import { validateEmail, validatePassword } from '../../utils/validation';
+import { validateConfirmPassword, validateEmail, validatePassword } from '../../utils/validation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigators';
+import CustomToast from '../../components/customToast';
 
 const RegisterWithEmail = () => {
   const [email, setEmail] = useState('');
@@ -56,16 +56,14 @@ const RegisterWithEmail = () => {
       setPasswordError('');
     }
 
-    if (!confirmPassword.trim()) {
-      setConfirmPasswordError('Please confirm your password');
-      isValid = false;
-    } else if (confirmPassword !== password) {
-      setConfirmPasswordError('Passwords do not match');
-      isValid = false;
-    } else {
+    const confirmPasswordValidationError = validateConfirmPassword(confirmPassword, password);
+    if(confirmPasswordValidationError){
+      setConfirmPasswordError(confirmPasswordValidationError);
+      isValid= false;
+    }
+    else{
       setConfirmPasswordError('');
     }
-
     return isValid;
   };
 
@@ -80,12 +78,11 @@ const RegisterWithEmail = () => {
         user
           ?.sendEmailVerification()
           .then(() => {
-            Alert.alert(
-              'Verification email sent. Please check your inbox to verify your email before logging in.'
-            );
+            CustomToast('success', 'Verification email sent.', 'Please check your inbox to verify your email before logging in.')
           })
           .catch(error => {
-            console.error('Error sending verification email:', error);
+            console.log('Error sending verification email:', error);
+            CustomToast('error', 'Error sending verification email');
           });
   
         setEmail('');
@@ -97,11 +94,11 @@ const RegisterWithEmail = () => {
       .catch(error => {
         setIsLoading(false);
         if (error.code === 'auth/email-already-in-use') {
-          Alert.alert('That email address is already in use!');
+          CustomToast('error', 'That email address is already in use!');
         } else if (error.code === 'auth/invalid-email') {
-          Alert.alert('That email address is invalid!');
+          CustomToast('error', 'That email address is invalid!');
         } else {
-          Alert.alert('Error during registration');
+          CustomToast('error', 'Error during registration');
         }
       })
       .finally(() => setIsLoading(false));

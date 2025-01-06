@@ -38,6 +38,7 @@ import styles from './styles';
 import moment from 'moment';
 import { day } from '../../constants/list';
 import { RootState } from '../../redux/store';
+import CustomToast from '../../components/customToast';
 
 const AddNewCategory = () => {
   const [name, setName] = useState('');
@@ -81,7 +82,7 @@ const AddNewCategory = () => {
   
     const nameExists = habitTypes.some(habit => habit.name.toLowerCase() === name.trim().toLowerCase());
     if (nameExists) {
-      Alert.alert('Duplicate Habit', 'A habit with this name already exists.');
+      CustomToast('error','Duplicate Habit','A habit with this name already exists')
       return;
     }
   
@@ -117,8 +118,8 @@ const AddNewCategory = () => {
         routes: [{ name: 'BottomTab', params: { screen: 'Habits' } }],
       });
     } catch (error) {
-      console.error('Error saving category to Firestore:', error);
-      Alert.alert('Error', 'There was an issue saving the habit. Please try again.');
+      console.log('Error saving category to Firestore:', error);
+      CustomToast('error','There was an issue saving the habit.','Please try again.');
     }
   };
   const close = () => {

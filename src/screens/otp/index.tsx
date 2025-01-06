@@ -18,6 +18,8 @@ import {RootStackParamList} from '../../navigators';
 import {OtpInput} from 'react-native-otp-entry';
 import {colors} from '../../utils/colors';
 import styles from './styles';
+import CustomToast from '../../components/customToast';
+import { validateOTP } from '../../utils/validation';
 const OTP = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
@@ -29,10 +31,7 @@ const OTP = () => {
   const [loading, setLoading] = useState(false);
 
   const verifyOtp = async () => {
-    if (otp.trim().length !== 6) {
-      setError('Please enter a 6-digit OTP.');
-      return;
-    }
+    setError(validateOTP(otp));
 
     setLoading(true);
     try {
@@ -45,7 +44,7 @@ const OTP = () => {
     } catch (err) {
       setLoading(false);
       setError('Invalid OTP. Please try again.');
-      console.error(err);
+      console.log(err);
     }
   };
 
