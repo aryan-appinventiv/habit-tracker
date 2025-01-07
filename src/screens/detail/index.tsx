@@ -510,38 +510,38 @@ const Detail = () => {
   //   }
   //   return data;
   // };
-  const generateYearData = () => {
-    const startDate = new Date(item.todayDate);
-    const frequency = item.frequency; // [1 (Monday) to 7 (Sunday)]
-    const repeatCompleted = item.repeatCompleted || {}; // Object with date as key and count as value
-    const data = [];
+  // const generateYearData = () => {
+  //   const startDate = new Date(item.todayDate);
+  //   const frequency = item.frequency; // [1 (Monday) to 7 (Sunday)]
+  //   const repeatCompleted = item.repeatCompleted || {}; // Object with date as key and count as value
+  //   const data = [];
   
-    for (let i = 0; i < 365; i++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + i);
+  //   for (let i = 0; i < 365; i++) {
+  //     const currentDate = new Date(startDate);
+  //     currentDate.setDate(startDate.getDate() + i);
   
-      const dayOfWeek = currentDate.getDay() || 7; // Adjust for Sunday being 0
+  //     const dayOfWeek = currentDate.getDay() || 7; // Adjust for Sunday being 0
   
-      if (frequency.includes(dayOfWeek)) {
-        const currentDateString = currentDate.toISOString().split('T')[0]; 
-        const count = repeatCompleted[currentDateString] || 0; 
-        const intensity = count >= item.repeat
-          ? 5 
-          : count > 0
-          ? Math.ceil((count / item.repeat) * 4) 
-          : 1; 
+  //     if (frequency.includes(dayOfWeek)) {
+  //       const currentDateString = currentDate.toISOString().split('T')[0]; 
+  //       const count = repeatCompleted[currentDateString] || 0; 
+  //       const intensity = count >= item.repeat
+  //         ? 5 
+  //         : count > 0
+  //         ? Math.ceil((count / item.repeat) * 4) 
+  //         : 1; 
   
-        data.push({
-          date: currentDateString,
-          count: intensity,
-        });
-      }
-    }
-    return data;
-  };
+  //       data.push({
+  //         date: currentDateString,
+  //         count: intensity,
+  //       });
+  //     }
+  //   }
+  //   return data;
+  // };
   
 
-  const commitsData = generateYearData();
+  //const commitsData = generateYearData();
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const copy = [...item.frequency];
@@ -595,14 +595,14 @@ const Detail = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ flexGrow: 1 }}
         >
-          <ContributionGraph
+          {/* <ContributionGraph
             values={commitsData}
             endDate={new Date('2025-12-31')}
             numDays={365}
             width={Wwidth * 3} 
             height={Wheight / 3.5}
             chartConfig={chartConfig}
-          />
+          /> */}
         </ScrollView>
       </ScrollView>
     </View>

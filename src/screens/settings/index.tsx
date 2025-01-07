@@ -26,17 +26,17 @@ import firestore from '@react-native-firebase/firestore';
 import ConfirmationModal from '../../components/confirmationModal';
 
 const Settings = () => {
-  const dispatch = useDispatch();
-  const currentTheme = useSelector(selectTheme);
-  const {top} = useSafeAreaInsets();
-  const Navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [mobile, setMobile] = useState<string>('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [ModalVisible, setModalVisible] = useState(false);
+
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(selectTheme);
+  const {top} = useSafeAreaInsets();
+  const Navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     const fetchUserData = async () => {

@@ -69,7 +69,13 @@ const Profile = () => {
   }, []); 
 
   const goback = () => {
-    Navigation.replace('BottomTab',{screen: 'Settings'});
+    Navigation.reset({
+      index: 0,
+      routes: [{
+        name: 'BottomTab', 
+        params: { screen: 'Settings' } 
+      }]
+    })
   };
 
   const update = async () => {
