@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0F3F5',
         flexDirection: 'row',
         borderRadius: vh(10),
-        marginVertical: vh(20),
+        marginTop: vh(20),
       },
       btn:{
         flex:1,
@@ -77,6 +77,37 @@ const styles = StyleSheet.create({
         alignItems:'center',
         paddingVertical: vh(8),
         borderRadius: vh(10),
+      },
+      activeBtn:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        paddingVertical: vh(8),
+        borderRadius: vh(10),
+        backgroundColor: '#D6E6F6',
+      },
+      graphCont: { 
+        marginTop: vh(20), 
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      },
+      lineChartCont: {
+        flexDirection:'row', 
+        justifyContent:'space-between', 
+        alignItems:'center', 
+        marginVertical: vh(15)
+      },
+      zoomCont: {
+        flexDirection:'row', 
+        gap: 10
+      },
+      zoom: {
+        backgroundColor:'#D6E6F6', 
+        borderRadius: 10,
+        width: vh(20),
+        height: vh(20),
+        alignItems:'center',
+        justifyContent:'center',
       },
   });
  export default styles; 
