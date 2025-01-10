@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useColorScheme
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -17,13 +18,14 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigators';
 import {items} from '../../constants/list';
 import {aboutItems} from '../../constants/list';
-import styles from './styles';
 import {changeTheme} from '../../redux/slices/theme';
-import {selectTheme} from '../../redux/selector';
 import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import ConfirmationModal from '../../components/confirmationModal';
+import { RootState } from '../../redux/store';
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
 
 const Settings = () => {
   const [username, setUsername] = useState<string>('');
@@ -33,7 +35,7 @@ const Settings = () => {
   const [ModalVisible, setModalVisible] = useState(false);
 
   const dispatch = useDispatch();
-  const currentTheme = useSelector(selectTheme);
+  const currentTheme = useSelector((state: RootState) => state.theme.themeType);
   const {top} = useSafeAreaInsets();
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -78,6 +80,7 @@ const Settings = () => {
   const handleToggle = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     dispatch(changeTheme(newTheme));
+    console.log("NewTheme", newTheme);
   };
 
   const gotoProfile = () =>{
@@ -91,6 +94,9 @@ const Settings = () => {
   const onClose = ()=>{
     toggleModal();
   }
+
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
   
   return ( 
     <View style={[styles.container, {paddingTop: top + vh(20)}]}>
@@ -120,7 +126,7 @@ const Settings = () => {
                 <TouchableOpacity style={styles.itemBtn} activeOpacity={0.7}>
                   <View style={styles.iconCont}>
                     <Image source={item.icon} style={styles.iconImg} />
-                    <Text style={[styles.itemBtnTxt, {color: colors.black}]}>
+                    <Text style={styles.itemBtnTxt}>
                       {item.name}
                     </Text>
                   </View>
@@ -140,7 +146,7 @@ const Settings = () => {
                     />
                   )}
                 </TouchableOpacity>
-                <Separator />
+                {id < items.length - 1 && <Separator />}
               </View>
             );
           })}
@@ -160,7 +166,7 @@ const Settings = () => {
                   </View>
                   <Image source={item.img} style={styles.itemImg} />
                 </TouchableOpacity>
-                <Separator />
+                {id < aboutItems.length - 1 && <Separator />}
               </View>
             );
           })}

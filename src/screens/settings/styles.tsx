@@ -2,22 +2,25 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import { vh, vw } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme: any)=>{
+  return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: theme.background,
       paddingHorizontal: vw(20),
     },
     label: {
       fontSize: vh(20),
       fontWeight: '600',
       letterSpacing: 1,
+      color: theme.text,
     },
     title1: {
       fontSize: vh(14),
       fontWeight: '500',
       letterSpacing: 0.5,
       marginVertical: vh(20),
+      color: theme.text,
     },
     itemBtn: {
       flexDirection: 'row',
@@ -29,6 +32,7 @@ const styles = StyleSheet.create({
     itemBtnTxt: {
       fontSize: vw(14),
       fontWeight: '400',
+      color: colors.text,
     },
     itemImg: {
       height: vw(15),
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
       height: vh(18),
     },
     list: {
-      backgroundColor: colors.white,
+      backgroundColor: theme.white,
       paddingHorizontal: vw(10),
       borderRadius: vh(15),
     },
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     },
     profileCont:{
       flexDirection:'row',
-      backgroundColor: colors.white,
+      backgroundColor: theme.white,
       alignItems:'center',
       padding: vh(10),
       justifyContent: 'space-between',
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
       letterSpacing: 0.5,
     },
     email:{
-      color: colors.text,
+      color: theme.text,
       paddingTop: vh(5),
     },
     nameCont:{
@@ -77,5 +81,5 @@ const styles = StyleSheet.create({
       alignItems:'center',
     }
   });
-  export default styles;
   
+} 

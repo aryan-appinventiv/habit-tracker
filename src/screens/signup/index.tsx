@@ -22,7 +22,7 @@ import styles from './styles';
 import { onGoogleButtonPress } from '../../config/firebase/GoogleSiginIn';
 
 const Signup = () => {
-  const [mobile, setMobile] = useState('');
+  const [mobile, setMobile] = useState('+91 7037427373');
   const [error, setError] = useState<string>('');
   const {top: top} = useSafeAreaInsets();
   const Navigation =

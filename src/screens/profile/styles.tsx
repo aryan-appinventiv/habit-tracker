@@ -2,10 +2,11 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import { vh, vw, Wheight } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles =(theme:any)=>{
+  return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: theme.background,
       paddingHorizontal: vw(20),
     },
     backIcon: {
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
       fontSize: vh(22),
       fontWeight: '500',
       letterSpacing: 0.7,
+      color: theme.text,
     },
     headerView: {
       flexDirection: 'row',
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
       fontSize: vh(18),
       fontWeight: '600',
       letterSpacing: 0.5,
+      color: theme.text,
     },
     userMail: {
       color: colors.gray,
@@ -100,5 +103,5 @@ const styles = StyleSheet.create({
       zIndex: 999, 
     },
   });
-  export default styles;
   
+} 

@@ -3,7 +3,6 @@ import {
   Keyboard,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -11,21 +10,21 @@ import {
   Platform,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { colors } from '../../utils/colors';
 import { vh } from '../../utils/dimensions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { images } from '../../assets/images';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigators';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import styles from './styles';
+import { getStyles } from './styles';
+import { useThemeColors } from '../../utils/themeSelector';
+import CustomSearchBar from '../../components/customSearchBar';
 
 const Habits = () => {
   const { top } = useSafeAreaInsets();
   const Navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList, 'MoreCategories'>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   
   const habitCategories = useSelector((state: RootState) => state.categories.habitTypes);
 
@@ -35,6 +34,9 @@ const Habits = () => {
   useEffect(() => {
     setFilteredHabits(habitCategories);
   }, [habitCategories]);
+  
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -58,18 +60,11 @@ const Habits = () => {
             <Text style={styles.heading}> My Habits</Text>
           </View>
 
-          <View style={styles.input}>
-            <Image source={images.search} style={styles.searchIcon} />
-            <TextInput
-              placeholder="Search"
-              placeholderTextColor={colors.gray}
-              style={styles.placeholder}
-              value={searchText}
-              onChangeText={handleSearch}
-              autoCapitalize="none"
-              autoComplete="off"
-            />
-          </View>
+          <CustomSearchBar
+            placeholder="Search"
+            value={searchText}
+            onChangeText={handleSearch}
+          />
 
           <ScrollView
             style={styles.list}

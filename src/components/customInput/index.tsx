@@ -1,7 +1,8 @@
 import { TextInput } from 'react-native';
 import React from 'react';
 import { colors } from '../../utils/colors';
-import styles from './styles';
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
 
 interface CustomInputProps {
   placeholder: string;
@@ -12,6 +13,8 @@ interface CustomInputProps {
 }
 
 const CustomInput = ({ placeholder, value, onChangeText, keyType, max }: CustomInputProps) => {
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
   return (
     <TextInput
       placeholder={placeholder}

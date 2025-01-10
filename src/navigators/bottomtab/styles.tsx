@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native"
 import { vh } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme:any)=>{
+    return StyleSheet.create({
     tabBarText: {  
         fontSize: vh(10), 
         marginTop: vh(10), 
+        color: theme.text,
     },
     tabBarCont: { 
         marginTop: vh(10), 
@@ -19,5 +21,4 @@ const styles = StyleSheet.create({
         width: vh(40), 
         height: vh(40)
     },
-})
-export default styles;
+})}

@@ -2,9 +2,10 @@ import { Platform, StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import { vh, vw } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme:any) =>{
+  return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: theme.background,
       flex: 1,
       paddingHorizontal: vw(20),
     },
@@ -28,29 +29,7 @@ const styles = StyleSheet.create({
       fontSize: vh(24),
       fontWeight: '500',
       letterSpacing: 1,
-      color: colors.text,
-    },
-    searchIcon: {
-      height: vh(18),
-      width: vh(18),
-    },
-    placeholder: {
-      color: colors.gray,
-      fontSize: vh(15),
-      fontWeight: '500',
-      flex: 1,
-      letterSpacing: 1,
-    },
-    input: {
-      flexDirection: 'row',
-      gap: vw(13),
-      borderWidth: 1,
-      borderColor: colors.lightgray,
-      paddingHorizontal: vh(10),
-      paddingVertical: Platform.OS === "ios"? vh(10) : vh(3),
-      borderRadius: vh(20),
-      backgroundColor: colors.white,
-      alignItems: 'center',
+      color: theme.text,
     },
     itemBtn: {
       flexDirection: 'row',
@@ -89,6 +68,4 @@ const styles = StyleSheet.create({
       marginBottom: vh(20),
     },
   });
-
-  export default styles;
-  
+} 

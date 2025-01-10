@@ -5,9 +5,10 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vh} from '../../utils/dimensions';
 import {Calendar} from 'react-native-calendars';
 import CircularProgress from 'react-native-circular-progress-indicator';
-import styles from './styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
 
 const Progress = () => {
   const [selected, setSelected] = useState('');
@@ -15,6 +16,10 @@ const Progress = () => {
   const {top: top} = useSafeAreaInsets();
 
   const habitCategories = useSelector((state: RootState) => state.categories.habitTypes);
+
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
+
   return (
     <View style={[styles.container, {paddingTop: top + vh(30)}]}>
       <Text style={styles.heading}>Progress</Text>
@@ -33,9 +38,9 @@ const Progress = () => {
       <CircularProgress 
         value={77} 
         valueSuffix={'%'}
-        progressValueColor={colors.text}
+        progressValueColor={theme.text}
         maxValue={100}
-        inActiveStrokeColor={colors.background}
+        inActiveStrokeColor={theme.background}
         activeStrokeColor={colors.tabIcon}
         radius={vh(60)}
         progressValueStyle={styles.progressValue}
@@ -45,7 +50,7 @@ const Progress = () => {
       <View style={styles.calendar}>
         <Calendar
         style={{
-            backgroundColor: 'transparent',
+            backgroundColor: colors.transparent,
           }}
           
           onDayPress={(day:any) => {
@@ -55,7 +60,7 @@ const Progress = () => {
             [selected]: {
               selected: true,
               selectedColor: colors.lightgray, 
-              selectedTextColor: '#fff', 
+              selectedTextColor: colors.white, 
             },
           }}
         />

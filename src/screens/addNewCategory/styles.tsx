@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
-import { vh, vw, Wwidth } from "../../utils/dimensions";
+import { vh, vw } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme:any)=>{
+  return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: theme.background,
       flex: 1,
       paddingHorizontal: vw(20),
     },
@@ -28,17 +29,17 @@ const styles = StyleSheet.create({
       fontSize: vh(24),
       fontWeight: '500',
       letterSpacing: 1,
-      color: colors.text,
+      color: theme.text,
     },
     error: {
-      color: 'red',
+      color: colors.red,
       marginHorizontal: vw(10),
       marginVertical: vh(10),
     },
     label: {
       fontSize: vh(15),
       marginBottom: vh(8),
-      color: colors.text,
+      color: theme.text,
       paddingHorizontal: vw(10),
     },
     insideCont: {
@@ -170,5 +171,4 @@ const styles = StyleSheet.create({
     selectedDay: {
       backgroundColor: colors.pink, 
     },
-  });
-  export default styles;
+  })}

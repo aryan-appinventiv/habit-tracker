@@ -21,7 +21,9 @@ import { RootStackParamList } from '../../navigators';
 import CustomButton from '../../components/customButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import styles from './styles';
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
+import CustomSearchBar from '../../components/customSearchBar';
 const Add = () => {
   const { top } = useSafeAreaInsets();
     const Navigation =
@@ -30,6 +32,9 @@ const Add = () => {
   
     const [searchText, setSearchText] = useState('');
     const [filteredHabits, setFilteredHabits] = useState(habitCategories);
+
+    const theme = useThemeColors();
+    const styles = getStyles(theme);
   
     const close = () => {
       Navigation.replace('BottomTab');
@@ -42,11 +47,6 @@ const Add = () => {
       );
       setFilteredHabits(filtered);
     };
-  
-    const gotoMore = (name: string) => {
-      Navigation.navigate('MoreCategories', { name });
-    };
-  
     const addNewCategory = () => {
       Navigation.navigate('AddNewCategory');
     };
@@ -59,23 +59,16 @@ const Add = () => {
           <View style={[styles.container, { paddingTop: top + vh(30) }]}>
             <View style={styles.headerCont}>
               <TouchableOpacity style={styles.closeCont} onPress={close}>
-                <Image source={images.close} style={styles.closeImg} />
+                <Image source={images.close} style={styles.closeImg} tintColor={theme.tintIconColor}/>
               </TouchableOpacity>
               <Text style={styles.heading}>Habits</Text>
             </View>
   
-            <View style={styles.input}>
-              <Image source={images.search} style={styles.searchIcon} />
-              <TextInput
-                placeholder="Search"
-                placeholderTextColor={colors.gray}
-                style={styles.placeholder}
-                value={searchText}
-                onChangeText={handleSearch}
-                autoCapitalize="none"
-                autoComplete="off"
-              />
-            </View>
+            <CustomSearchBar
+            placeholder="Search"
+            value={searchText}
+            onChangeText={handleSearch}
+          />
   
             <ScrollView
               style={styles.list}
@@ -85,13 +78,11 @@ const Add = () => {
                 <TouchableOpacity
                   style={[styles.itemBtn, { backgroundColor: item.clr }]}
                   activeOpacity={0.7}
-                  onPress={() => gotoMore(item.name)}
                   key={item.id}>
                   <View style={styles.iconCont}>
                     {typeof item.icon === 'string'? (<Text>{item.icon}</Text>):(<Image source={item.icon} style={styles.iconImg} />)}
                     <Text style={styles.itemBtnTxt}>{item.name}</Text>
                   </View>
-                  <Image source={item.img} style={styles.itemImg} />
                 </TouchableOpacity>
               ))}
             </ScrollView>

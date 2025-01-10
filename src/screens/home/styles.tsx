@@ -2,17 +2,20 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import { vh, vw } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme:any) => {
+  return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: theme.background,
     },
     listTxt: {
       fontSize: vh(15),
       letterSpacing: 0.5,
+      color: theme.text,
     },
     timeCont: {
-      padding: vh(10),
+      paddingVertical: vh(10),
+      paddingHorizontal: vh(15),
       borderRadius: vh(20),
       marginHorizontal: vw(10),
       borderWidth: 1,
@@ -43,21 +46,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: vw(5),
       },
       dateNumberStyle: {
-        color: colors.text,
+        color: theme.text,
         borderRadius: vh(20),
         fontSize: vh(16),
         fontWeight: '500',
         width: vh(35),
         height:vh(35),
         borderWidth: vh(3),
-        borderColor: 'transparent',
+        borderColor: colors.transparent,
         justifyContent: 'center', 
         alignItems: 'center', 
         textAlign: 'center', 
         lineHeight: vh(35), 
       },
       dateNameStyle: {
-        color: '#666',
+        color: colors.gray,
         fontSize: vh(16),
       },
       highlightDateNumberStyle: {
@@ -73,6 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center', 
         textAlign: 'center', 
         lineHeight: vh(30), 
+        color: colors.black,
       },
 
       habitListContainer: {
@@ -151,9 +155,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
       },
-      
-
-
   });
-  export default styles;
+
   
+} 

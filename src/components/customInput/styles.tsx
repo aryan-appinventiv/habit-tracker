@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import { vh, vw } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme:any)=>{
+  return StyleSheet.create({
     input: {
       backgroundColor: colors.white,
       borderColor: colors.lightgray,
@@ -14,5 +15,5 @@ const styles = StyleSheet.create({
       paddingHorizontal: vw(15),
     },
   });
-  export default styles;
+} 
   

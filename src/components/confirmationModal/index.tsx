@@ -5,8 +5,9 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import styles from './styles';
+import { getStyles } from './styles';
 import { colors } from '../../utils/colors';
+import { useThemeColors } from '../../utils/themeSelector';
 
 interface ConfirmationModalProps{
   visible: boolean;
@@ -23,6 +24,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   title,
   desc,
 }) => {
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
   return (
     <Modal
       transparent
@@ -33,15 +36,13 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       <View style={styles.modalOverlay}>
         <View
           style={[
-            styles.modalContent,
-            { backgroundColor: colors.white },
+            styles.modalContent
           ]}
         >
           <Text style={styles.modalTitle}>{title}</Text>
           <Text
             style={[
               styles.modalSubtitle,
-              { color: colors.black },
             ]}
           >
             {desc}

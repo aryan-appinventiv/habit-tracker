@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -16,6 +16,10 @@ import Signin from '../screens/signin';
 import ForgotPassword from '../screens/forgotPassword';
 import Profile from '../screens/profile';
 import useFetchCategories from '../utils/firestore/useFetchCategories'
+import { changeTheme, loadTheme } from '../redux/slices/theme';
+import { useColorScheme } from 'react-native';
+import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -36,6 +40,27 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator: React.FC = () => {
+      const currentSystemTheme = useColorScheme();
+      const dispatch = useDispatch();
+      // useEffect(()=>{
+      //   dispatch(changeTheme(currentSystemTheme));
+      // },[])
+      useEffect(() => {
+            const fetchTheme = async () => {
+              try {
+                const storedTheme = await AsyncStorage.getItem('themeType');
+                if (storedTheme) {
+                  dispatch(loadTheme(storedTheme));
+                } else {
+                  dispatch(changeTheme(currentSystemTheme));
+                }
+              } catch (error) {
+                console.error('Failed to load theme from storage:', error);
+              }
+            };
+        
+            fetchTheme();
+          }, [dispatch, currentSystemTheme]);
       useFetchCategories();
   return (
     <NavigationContainer>

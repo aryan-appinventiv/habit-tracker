@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   Switch,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCategory } from '../../redux/slices/categories';
@@ -34,11 +33,12 @@ import ColorPicker, {
   HueSlider,
 } from 'reanimated-color-picker';
 import CustomButton from '../../components/customButton';
-import styles from './styles';
 import moment from 'moment';
 import { day } from '../../constants/list';
 import { RootState } from '../../redux/store';
 import CustomToast from '../../components/customToast';
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
 
 const AddNewCategory = () => {
   const [name, setName] = useState('');
@@ -63,6 +63,9 @@ const AddNewCategory = () => {
   const todayDate = new Date(today);
   const todayDay = todayDate.getDay();
   const habitTypes = useSelector((state: RootState) => state.categories.habitTypes);
+
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
 
   const handleAddCategory = async () => {
     if (!name.trim()) {
@@ -146,7 +149,7 @@ const AddNewCategory = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.headerCont}>
         <TouchableOpacity style={styles.closeCont} onPress={close}>
-          <Image source={images.close} style={styles.closeImg} />
+          <Image source={images.close} style={styles.closeImg} tintColor={theme.tintIconColor}/>
         </TouchableOpacity>
         <Text style={styles.heading}>Habit</Text>
       </View>

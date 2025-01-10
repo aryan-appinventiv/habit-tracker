@@ -2,10 +2,11 @@ import { StyleSheet } from "react-native";
 import { colors } from "../../utils/colors";
 import { vh, vw } from "../../utils/dimensions";
 
-const styles = StyleSheet.create({
+export const getStyles = (theme:any)=>{
+  return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: theme.background,
       paddingHorizontal: vw(20),
     },
     headerCont: {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
       fontSize: vh(20),
       letterSpacing: 0.5,
       fontWeight: '500',
-      color: colors.text,
+      color: theme.text,
       textAlign: 'center',
       marginTop: vh(7),
     },
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: vw(10),
       letterSpacing: 0.2,
       marginTop: vh(10),
+      color: theme.text,
     },
     txtCont: {
       marginVertical: vh(30),
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
       graphCont: { 
         marginTop: vh(20), 
         alignItems: 'center', 
-        justifyContent: 'center' 
+        justifyContent: 'center',
       },
       lineChartCont: {
         flexDirection:'row', 
@@ -109,6 +111,4 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
       },
-  });
- export default styles; 
-  
+  })}

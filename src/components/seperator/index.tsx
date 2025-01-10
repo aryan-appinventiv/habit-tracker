@@ -1,8 +1,11 @@
 import { View } from 'react-native'
 import React from 'react'
-import styles from './styles'
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
 
 const Separator = () => {
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
   return (
     <View style={styles.line}/>
   )

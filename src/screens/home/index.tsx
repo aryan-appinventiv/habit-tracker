@@ -5,23 +5,28 @@ import { colors } from '../../utils/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { vh } from '../../utils/dimensions';
 import CalendarStrip from 'react-native-calendar-strip';
+import moment from 'moment'; 
 
 import { RootState } from '../../redux/store';
-import styles from './styles';
+import { getStyles } from './styles';
 import { images } from '../../assets/images';
 import {
   incrementRepeatCompleted,
   decrementRepeatCompleted,
 } from '../../redux/slices/categories';
+import { useThemeColors } from '../../utils/themeSelector';
 
 const Home = () => {
   const { top } = useSafeAreaInsets();
   const [selectedTimeCategory, setSelectedTimeCategory] = useState('All day');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedDay, setSelectedDay] = useState<number>();
+  const [selectedDate, setSelectedDate] = useState(moment().format('YYYY-MM-DD'));
+  const [selectedDay, setSelectedDay] = useState<number>(moment().isoWeekday());
 
   const habits = useSelector((state: RootState) => state.categories.habitTypes);
   const dispatch = useDispatch();
+
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
 
   const setTimeCategory = (category: string) => {
     setSelectedTimeCategory(category);
@@ -30,9 +35,8 @@ const Home = () => {
   const handleDate = (date: any) => {
     let formattedDate = date.format('YYYY-MM-DD');
     setSelectedDate(formattedDate);
-    const d = new Date(formattedDate);
-    const day = d.getDay();
-    setSelectedDay(day === 0 ? 7 : day); 
+    const day = date.isoWeekday();
+    setSelectedDay(day);
   };
 
   const filterHabits = (selectedTimeCategory: string, selectedDay: number) => {
@@ -185,7 +189,7 @@ const Home = () => {
           <ScrollView>
             {completedHabits.map(habit => (
               <View style={styles.habitCont} key={habit.id}>
-                  <View style={styles.innerCont1}>
+                <View style={styles.innerCont1}>
                   <View
                     style={[styles.habitIcon, { backgroundColor: habit.clr }]}>
                     <Text>{habit.icon}</Text>
@@ -217,4 +221,3 @@ const Home = () => {
 };
 
 export default Home;
-

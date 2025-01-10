@@ -1,10 +1,9 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../utils/colors";
-
-const styles = StyleSheet.create({
-    line:{
-        height: 3,
-        backgroundColor: colors.background,
-    }
-})
-export default styles;
+export const getStyles =(theme:any)=>{
+    return StyleSheet.create({
+        line:{
+            height: 3,
+            backgroundColor: theme.background,
+        }
+    })    
+} 

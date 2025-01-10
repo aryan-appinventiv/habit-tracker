@@ -16,8 +16,9 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { useRoute } from '@react-navigation/native';
-import styles from './styles';
 import CustomToast from '../../components/customToast';
+import { useThemeColors } from '../../utils/themeSelector';
+import { getStyles } from './styles';
 
 const Profile = () => {
   const [username, setUsername] = useState('');
@@ -68,6 +69,9 @@ const Profile = () => {
     fetchUserProfile();
   }, []); 
 
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
+
   const goback = () => {
     Navigation.reset({
       index: 0,
@@ -113,7 +117,8 @@ const Profile = () => {
         Navigation.replace('BottomTab', { screen: 'Settings' });
       }
     } catch (error) {
-      CustomToast('error','Error', 'There was an issue updating your profile. Please try again.');
+      //CustomToast('error','Error', 'There was an issue updating your profile. Please try again.');
+      console.log("error");
     } finally {
       setLoading(false);
     }
@@ -184,7 +189,7 @@ const Profile = () => {
         <View style={{ flex: 1 }}>
           <View style={styles.headerView}>
             {showBack && (<TouchableOpacity style={styles.backCont} activeOpacity={0.7} onPress={goback} >
-              <Image source={images.back} style={styles.backIcon} />
+              <Image source={images.back} style={styles.backIcon} tintColor={theme.tintIconColor} />
             </TouchableOpacity>)}
             
             <View style={showBack?styles.headerCont: styles.headerContBack}>
@@ -214,7 +219,7 @@ const Profile = () => {
                 <Image source={images.calendar} style={styles.backIcon} />
               </TouchableOpacity>
               <View style={{ marginVertical: vh(20) }}>
-                <CustomButton title="Update Profile" onPress={update} disabled={username.length<3} />
+                <CustomButton title="Update Profile" onPress={update} disabled={username.length<3} color={theme.buttonText} backColor={theme.buttonBackground}/>
               </View>
             </View>
           </ScrollView>

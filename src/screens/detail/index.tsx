@@ -5,12 +5,13 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useDispatch} from 'react-redux';
 import {LineChart, BarChart, ContributionGraph} from 'react-native-chart-kit';
-import styles from './styles';
+import { getStyles } from './styles';
 import {images} from '../../assets/images';
 import {vh, Wwidth} from '../../utils/dimensions';
 import {RootStackParamList} from '../../navigators';
 import {deleteHabitCategory} from '../../utils/firestore/deleteHabitCategory';
 import ConfirmationModal from '../../components/confirmationModal';
+import { useThemeColors } from '../../utils/themeSelector';
 
 const Detail = () => {
   const [visibleModal, setVisibleModal] = useState(false);
@@ -22,6 +23,9 @@ const Detail = () => {
   const Navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
+
+  const theme = useThemeColors();
+  const styles = getStyles(theme);
 
   const goback = () => {
     Navigation.goBack();
@@ -43,7 +47,7 @@ const Detail = () => {
   const toggleModal = () => {
     setVisibleModal(!visibleModal);
   };
-  
+
   type RepeatCompletedType = { [key: string]: number };
   const contributionsData = Object.entries(item.repeatCompleted as RepeatCompletedType || {}).map(
     ([date, count]) => ({
@@ -109,6 +113,8 @@ const Detail = () => {
       setGraphWidth(graphWidth - 0.5);
     }
   };
+  console.log("repeatCompleted", item.repeatCompleted);
+  console.log(Object.keys(item.repeatCompleted).length);
   return (
     <View style={[styles.container, {paddingTop: top + vh(20)}]}>
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
@@ -117,13 +123,13 @@ const Detail = () => {
             style={styles.headerIconCont}
             activeOpacity={0.7}
             onPress={goback}>
-            <Image source={images.close} style={styles.headerIcon} />
+            <Image source={images.close} style={styles.headerIcon} tintColor={theme.tintIconColor} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.headerIconCont}
             activeOpacity={0.7}
             onPress={toggleModal}>
-            <Image source={images.delete} style={styles.headerDelIcon} />
+            <Image source={images.delete} style={styles.headerDelIcon} tintColor={theme.tintIconColor}/>
           </TouchableOpacity>
           <ConfirmationModal
             visible={visibleModal}
@@ -152,7 +158,7 @@ const Detail = () => {
         {/* Contribution Graph */}
         <Text style={styles.txt}>Yearly status</Text>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <ScrollView showsHorizontalScrollIndicator={false} bounces={false}>
+          <ScrollView showsHorizontalScrollIndicator={false} bounces={false} horizontal>
             <ContributionGraph
               values={contributionsData}
               endDate={new Date('2025-12-31')}
@@ -308,7 +314,9 @@ const Detail = () => {
         )}
 
         {/* Line Chart */}
-        <View style={styles.lineChartCont}>
+        {Object.keys(item.repeatCompleted).length ? (
+          <>
+          <View style={styles.lineChartCont}>
           <Text style={styles.txt}>Habit Completion Chart</Text>
           <View style={styles.zoomCont}>
             <TouchableOpacity onPress={zoomOut} style={styles.zoom}>
@@ -319,7 +327,7 @@ const Detail = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View>
+        <View style={{marginVertical: 20}}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             bounces={false}
@@ -333,15 +341,17 @@ const Detail = () => {
                   },
                 ],
               }}
-              width={Wwidth * graphWidth}
+              width={Wwidth* graphWidth}
               height={vh(250)}
               chartConfig={chartConfig}
               bezier
               style={{marginVertical: 8}}
-              withVerticalLabels={false}
             />
           </ScrollView>
         </View>
+        </>
+        ):(<View></View>)}
+        
       </ScrollView>
     </View>
   );
