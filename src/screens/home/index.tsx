@@ -146,7 +146,7 @@ const Home = () => {
           ))}
         </ScrollView>
       </View>
-
+      <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
       {inProgressHabits.length > 0 ? (
         <View style={styles.habitListContainer}>
           <Text style={styles.labelTxt}>In Progress</Text>
@@ -216,6 +216,7 @@ const Home = () => {
           </ScrollView>
         </View>
       )}
+      </ScrollView>
     </View>
   );
 };
